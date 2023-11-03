@@ -1,7 +1,7 @@
-import { StatusBarStyle } from "react-native";
-import { Color } from "./color";
-import { TypographyType } from "./typography";
-import { TextStyle } from "~/@dobeeteam/core/components";
+import {StatusBarStyle} from 'react-native';
+import {Color} from './color';
+import {TypographyType} from './typography';
+import {TextStyle} from '@data/models';
 
 export type Typography = {
   [type in TypographyType]?: TextStyle;

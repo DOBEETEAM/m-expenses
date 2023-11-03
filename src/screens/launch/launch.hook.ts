@@ -1,8 +1,11 @@
 import {useCallback, useEffect} from 'react';
+// @packages
+import BootSplash from 'react-native-bootsplash';
+// @types
 import {UseLaunchProps} from './launch.type';
 
 export function useLaunchModel({navigation}: UseLaunchProps) {
-  const init = useCallback(async () => {
+  const initialApp = useCallback(async () => {
     await new Promise((resolve) =>
       setTimeout(() => {
         resolve(true);
@@ -12,10 +15,12 @@ export function useLaunchModel({navigation}: UseLaunchProps) {
       index: 0,
       routes: [{name: 'BottomTab'}],
     });
-  }, []);
+  }, [navigation]);
 
   useEffect(() => {
-    init();
+    initialApp().finally(async () => {
+      await BootSplash.hide({fade: true});
+    });
   }, []);
 }
 

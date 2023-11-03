@@ -4,7 +4,7 @@ import {Home} from '@screens';
 
 const HomeTab: TabItem = {
   iconName: 'home-outline',
-  selectedIconName: 'home',
+  selectedIconName: 'home-sharp',
   routeName: 'Home',
   titleKey: 'home',
   component: Home as any,

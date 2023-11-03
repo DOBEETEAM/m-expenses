@@ -1,9 +1,13 @@
 import React from 'react';
 import {StyleSheet, StatusBar, LogBox} from 'react-native';
 // @packages
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FlashMessage from 'react-native-flash-message';
+// @stores
+import {persistor, store} from './store';
 // @contexts
 import {ThemeProvider} from '@shared';
 // @navigation
@@ -27,15 +31,19 @@ const styles = StyleSheet.create({
 
 export default function App() {
   return (
-    <ThemeProvider initial={BASE_LIGHT_THEME}>
-      <SafeAreaProvider>
-        <StatusBar />
-        <GestureHandlerRootView style={styles.container}>
-          <RootNavigator />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider initial={BASE_LIGHT_THEME}>
+          <SafeAreaProvider>
+            <StatusBar />
+            <GestureHandlerRootView style={styles.container}>
+              <RootNavigator />
 
-          <FlashMessage titleStyle={styles.flashMessageTitle} />
-        </GestureHandlerRootView>
-      </SafeAreaProvider>
-    </ThemeProvider>
+              <FlashMessage titleStyle={styles.flashMessageTitle} />
+            </GestureHandlerRootView>
+          </SafeAreaProvider>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 }

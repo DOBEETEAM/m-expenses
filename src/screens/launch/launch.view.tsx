@@ -1,12 +1,13 @@
 import React from 'react';
+import {Image} from 'react-native';
 // @types
 import {LaunchProps} from './launch.type';
-import {TypographyType} from '@resources/theme';
 // @hooks
 import {useTheme} from '@shared/hooks';
 import {useLaunchModel} from './launch.hook';
 // @components
-import {ActivityIndicator, Container, Typography} from '@components/base';
+import {ActivityIndicator, Container} from '@components/base';
+
 // @styles
 import {styles} from './launch.style';
 
@@ -16,9 +17,14 @@ const _Launch: React.FC<LaunchProps> = ({navigation}) => {
 
   return (
     <Container flex center>
-      <Typography type={TypographyType.TITLE_HUGE} style={styles.logoContainer}>
-        Expenses Tracker
-      </Typography>
+      <Container noBackground style={styles.logoContainer}>
+        <Image
+          source={require('@assets/logo/icon-android-foreground.png')}
+          style={styles.imageContainer}
+          resizeMode="contain"
+        />
+      </Container>
+
       <ActivityIndicator color={theme.color.primary} size={'large'} />
     </Container>
   );

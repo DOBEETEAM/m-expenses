@@ -62,10 +62,10 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
           tabBarIcon: renderIcon(tabItem),
           tabBarStyle: {
             ...theme.layout.shadow,
-            backgroundColor: theme.color.background,
+            backgroundColor: theme.color.surface,
             borderColor: theme.color.border,
           },
-          tabBarActiveTintColor: theme.color.primary as string,
+          tabBarActiveTintColor: theme.color.primaryHighlight as string,
           headerShown: false,
         };
       },

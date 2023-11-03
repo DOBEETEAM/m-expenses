@@ -1,0 +1,7 @@
+{
+  "imagePathAndroid": "./assets/logo/icon-android-legacy.png",
+  "imagePathIos": "./assets/logo/icon.jpg",
+
+  "adaptiveIconBackground": "./assets/logo/icon-android-background.png",
+  "adaptiveIconForeground": "./assets/logo/icon-android-foreground.png"
+}
