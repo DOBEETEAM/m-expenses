@@ -1,0 +1,29 @@
+{
+  "api": {
+    "error": {
+      "message": "Something wrong happened, please try later",
+      "connect": "The connection to the server failed. Please try again later!"
+    }
+  },
+
+  "appTab": {
+    "home": {
+      "title": "Home"
+    },
+    "transaction": {
+      "title": "Transaction"
+    },
+    "budget": {
+      "title": "Budget"
+    },
+    "profile": {
+      "title": "Profile"
+    }
+  },
+
+  "screen": {
+    "login": {
+      "mainTitle": "Login"
+    }
+  }
+}

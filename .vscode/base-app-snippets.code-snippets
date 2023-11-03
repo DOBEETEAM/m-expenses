@@ -1,0 +1,114 @@
+{
+  // Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "all import sections": {
+    "prefix": ["all import sections"],
+    "body": [
+      "// @packages",
+      "// @types",
+      "// @classes",
+      "// @configs",
+      "// @contexts",
+      "// @stores",
+      "// @helpers",
+      "// @hooks",
+      "// @networks",
+      "// @navigation",
+      "// @constants",
+      "// @components",
+      "// @styles",
+      "// @images",
+      "// @others"
+    ],
+    "description": "all import sections available"
+  },
+  "packages - the 1st import section": {
+    "prefix": ["packages import section", "@packages"],
+    "body": ["// @packages"],
+    "description": "packages - the first import section"
+  },
+  "types - the 2sd import section": {
+    "prefix": ["types import section", "@types"],
+    "body": ["// @types"],
+    "description": "types - the second import section"
+  },
+  "classes - 3rd import section": {
+    "prefix": ["classes import section", "@classes"],
+    "body": ["// @classes"],
+    "description": "classes - the third import section"
+  },
+  "configs - the 4th import section": {
+    "prefix": ["configs import section", "@configs"],
+    "body": ["// @configs"],
+    "description": "configs - the fourth import section"
+  },
+  "contexts - the 5th import section": {
+    "prefix": ["contexts import section", "@contexts"],
+    "body": ["// @contexts"],
+    "description": "contexts - the fifth import section"
+  },
+  "stores - the 6th import section": {
+    "prefix": ["stores import section", "@stores"],
+    "body": ["// @stores"],
+    "description": "stores - the sixth import section"
+  },
+  "helpers - the 7th import section": {
+    "prefix": ["helpers import section", "@helpers"],
+    "body": ["// @helpers"],
+    "description": "helpers - the seventh import section"
+  },
+  "hooks - the 8th import section": {
+    "prefix": ["hooks import section", "@hooks"],
+    "body": ["// @hooks"],
+    "description": "hooks - the eighth import section"
+  },
+  "networks - the 9th import section": {
+    "prefix": ["networks import section", "@networks"],
+    "body": ["// @networks"],
+    "description": "networks - the ninth import section"
+  },
+  "navigation - the 10th import section": {
+    "prefix": ["navigation import section", "@navigation"],
+    "body": ["// @navigation"],
+    "description": "navigation - the tenth import section"
+  },
+  "constants - the 11th import section": {
+    "prefix": ["constants import section", "@constants"],
+    "body": ["// @constants"],
+    "description": "constants - the eleventh import section"
+  },
+  "components - the 12th import section": {
+    "prefix": ["components import section", "@components"],
+    "body": ["// @components"],
+    "description": "components - the twelfth import section"
+  },
+  "styles - the 13th import section": {
+    "prefix": ["styles import section", "@styles"],
+    "body": ["// @styles"],
+    "description": "styles - the thirteenth import section"
+  },
+  "images - the 14th import section": {
+    "prefix": ["images import section", "@images"],
+    "body": ["// @images"],
+    "description": "images - the fourteenth import section"
+  },
+  "others - the 15th import section": {
+    "prefix": ["others import section", "@others"],
+    "body": ["// @others"],
+    "description": "others - the fifteenth import section"
+  }
+}

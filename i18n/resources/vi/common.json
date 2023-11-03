@@ -1,0 +1,31 @@
+{
+  "api": {
+    "error": {
+      "message": "Có lỗi xảy ra, vui lòng thử lại sau",
+      "connect": "Kết nối tới máy chủ thất bại. Vui lòng thử lại sau"
+    }
+  },
+
+  "appTab": {
+    "home": {
+      "title": "Trang chủ"
+    },
+    "transaction": {
+      "title": "Giao dịch"
+    },
+    "budget": {
+      "title": "Ngân sách"
+    },
+    "profile": {
+      "title": "Cá nhân"
+    }
+  },
+
+  "screen": {
+    "login": {
+      "mainTitle": "Đăng nhập"
+    },
+    "walletDetail": "Chi tiết ví"
+  }
+
+}
