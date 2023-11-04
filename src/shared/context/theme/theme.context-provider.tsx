@@ -57,7 +57,7 @@ const _ThemeProvider = ({children, initial}: ThemeProviderProps) => {
 
   // emit an event whenever the theme is changed.
   useEffect(() => {
-    dispatch(setStoreTheme(theme));
+    dispatch(setStoreTheme(theme.id));
   }, [dispatch, theme]);
   // Render our context provider by passing it the value to provide
   return (
