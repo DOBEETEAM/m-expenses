@@ -1,8 +1,10 @@
-import {useCallback, useEffect} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 // @packages
 import BootSplash from 'react-native-bootsplash';
 // @types
 import {UseLaunchProps} from './launch.type';
+import {useTheme} from '@shared/hooks';
+import {ViewStyle} from '@data/models';
 
 export function useLaunchModel({navigation}: UseLaunchProps) {
   const initialApp = useCallback(async () => {
@@ -24,4 +26,17 @@ export function useLaunchModel({navigation}: UseLaunchProps) {
   }, []);
 }
 
-export function useLaunchStyle() {}
+export function useLaunchStyle() {
+  const {theme} = useTheme();
+
+  const screenContainerStyle: ViewStyle = useMemo(
+    () => ({
+      backgroundColor: theme.color.white,
+    }),
+    [theme],
+  );
+
+  return {
+    screenContainerStyle,
+  };
+}

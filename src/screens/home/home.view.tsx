@@ -1,17 +1,23 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+// @packages
+import {useTranslation} from 'react-i18next';
 // @types
 import {HomeProps} from './home.type';
+// @hooks
+import {useTheme} from '@shared/hooks';
 // @components
-import {Container} from '@components/base';
+import {ScreenWrapper, Typography} from '@components/base';
 // @styles
 import {styles} from './home.style';
 
 const _Home: React.FC<HomeProps> = () => {
+  const {t} = useTranslation(['theme']);
+  const {theme} = useTheme();
+
   return (
-    <Container flex safeLayout noBackground>
-      <Text>hjkdfks</Text>
-    </Container>
+    <ScreenWrapper safeLayout noBackground>
+      <Typography>Theme: {t(`${theme.id}`)}</Typography>
+    </ScreenWrapper>
   );
 };
 

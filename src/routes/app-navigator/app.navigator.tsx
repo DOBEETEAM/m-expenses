@@ -11,7 +11,7 @@ import {useTheme} from '@shared/hooks';
 // @navigation
 import {BottomTabNavigator} from './bottom-tabs';
 // @components
-import {Launch} from '@screens';
+import {AppIntro, Launch} from '@screens';
 
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
@@ -30,6 +30,8 @@ export function AppNavigator() {
   return (
     <AppStack.Navigator screenOptions={screenOptions}>
       <AppStack.Screen name="Launch" component={Launch} />
+
+      <AppStack.Screen name="AppIntro" component={AppIntro} />
 
       <AppStack.Screen name={'BottomTab'} component={BottomTabNavigator} />
     </AppStack.Navigator>

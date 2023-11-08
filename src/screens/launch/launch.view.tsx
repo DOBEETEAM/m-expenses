@@ -4,19 +4,19 @@ import {Image} from 'react-native';
 import {LaunchProps} from './launch.type';
 // @hooks
 import {useTheme} from '@shared/hooks';
-import {useLaunchModel} from './launch.hook';
+import {useLaunchModel, useLaunchStyle} from './launch.hook';
 // @components
-import {ActivityIndicator, Container} from '@components/base';
-
+import {ActivityIndicator, Container, ScreenWrapper} from '@components/base';
 // @styles
 import {styles} from './launch.style';
 
 const _Launch: React.FC<LaunchProps> = ({navigation}) => {
   const {theme} = useTheme();
   useLaunchModel({navigation});
+  const {screenContainerStyle} = useLaunchStyle();
 
   return (
-    <Container flex center>
+    <ScreenWrapper style={[styles.screenContainer, screenContainerStyle]}>
       <Container noBackground style={styles.logoContainer}>
         <Image
           source={require('@assets/logo/icon-android-foreground.png')}
@@ -26,7 +26,7 @@ const _Launch: React.FC<LaunchProps> = ({navigation}) => {
       </Container>
 
       <ActivityIndicator color={theme.color.primary} size={'large'} />
-    </Container>
+    </ScreenWrapper>
   );
 };
 
