@@ -16,12 +16,11 @@ const _Launch: React.FC<LaunchProps> = ({navigation}) => {
   const {screenContainerStyle} = useLaunchStyle();
 
   return (
-    <ScreenWrapper style={[styles.screenContainer, screenContainerStyle]}>
+    <ScreenWrapper safeTopLayout style={[styles.screenContainer, screenContainerStyle]}>
       <Container noBackground style={styles.logoContainer}>
         <Image
           source={require('@assets/logo/icon-android-foreground.png')}
           style={styles.imageContainer}
-          resizeMode="contain"
         />
       </Container>
 

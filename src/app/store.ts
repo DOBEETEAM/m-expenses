@@ -4,9 +4,11 @@ import {configureStore, combineReducers} from '@reduxjs/toolkit';
 import {persistStore, persistReducer} from 'redux-persist';
 // @others
 import themeReducer from '@features/theme';
+import appReducer from '@features/app'
 
 const reducers = combineReducers({
   theme: themeReducer,
+  app: appReducer
 });
 
 const persistConfig = {
@@ -14,7 +16,7 @@ const persistConfig = {
   storage: AsyncStorage,
   debug: true,
   blacklist: [],
-  whitelist: ['theme'],
+  whitelist: ['theme', 'app'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);

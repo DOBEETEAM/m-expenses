@@ -15,7 +15,7 @@ const _Home: React.FC<HomeProps> = () => {
   const {theme} = useTheme();
 
   return (
-    <ScreenWrapper safeLayout noBackground>
+    <ScreenWrapper safeTopLayout noBackground>
       <Typography>Theme: {t(`${theme.id}`)}</Typography>
     </ScreenWrapper>
   );

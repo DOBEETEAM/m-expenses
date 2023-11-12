@@ -1,9 +1,12 @@
 import React from 'react';
-import {StyleSheet, StatusBar, LogBox} from 'react-native';
+import {StyleSheet, LogBox} from 'react-native';
 // @packages
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {
+  SafeAreaInsetsContext,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FlashMessage from 'react-native-flash-message';
 // @stores
@@ -14,6 +17,8 @@ import {ThemeProvider} from '@shared';
 import RootNavigator from '@routes';
 // @constants
 import {BASE_LIGHT_THEME} from '@resources/theme';
+// @components
+import {StatusBar} from '@components/base';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -39,7 +44,16 @@ export default function App() {
             <GestureHandlerRootView style={styles.container}>
               <RootNavigator />
 
-              <FlashMessage titleStyle={styles.flashMessageTitle} />
+              <SafeAreaInsetsContext.Consumer>
+                {(insets) => (
+                  <FlashMessage
+                    style={{
+                      paddingTop: insets?.top,
+                    }}
+                    titleStyle={styles.flashMessageTitle}
+                  />
+                )}
+              </SafeAreaInsetsContext.Consumer>
             </GestureHandlerRootView>
           </SafeAreaProvider>
         </ThemeProvider>

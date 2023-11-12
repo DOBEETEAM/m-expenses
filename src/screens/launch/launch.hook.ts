@@ -5,19 +5,35 @@ import BootSplash from 'react-native-bootsplash';
 import {UseLaunchProps} from './launch.type';
 import {useTheme} from '@shared/hooks';
 import {ViewStyle} from '@data/models';
+// @hooks
+import {useAppSelector} from '@app/hooks';
+// @others
+import {appSelector} from '@features/app';
 
 export function useLaunchModel({navigation}: UseLaunchProps) {
+  const {isAppIntro} = useAppSelector(appSelector);
+
+  const checkFirstTimeIntro = useCallback(() => {
+    if (isAppIntro) {
+      navigation.navigate('AppIntro');
+      return;
+    }
+
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'BottomTab'}],
+    });
+  }, [isAppIntro, navigation]);
+
   const initialApp = useCallback(async () => {
     await new Promise((resolve) =>
       setTimeout(() => {
         resolve(true);
       }, 2000),
     );
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'BottomTab'}],
-    });
-  }, [navigation]);
+
+    checkFirstTimeIntro();
+  }, [checkFirstTimeIntro]);
 
   useEffect(() => {
     initialApp().finally(async () => {
