@@ -15,7 +15,7 @@ export function useLaunchModel({navigation}: UseLaunchProps) {
 
   const checkFirstTimeIntro = useCallback(() => {
     if (isAppIntro) {
-      navigation.navigate('AppIntro');
+      navigation.replace('AppIntro')
       return;
     }
 
