@@ -1,20 +1,28 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Image} from 'react-native';
 // @packages
 import Carousel from 'react-native-reanimated-carousel';
+import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 // @types
 import {AppIntroProps, SlideData} from './app-intro.type';
 import {TypographyType} from '@resources/theme';
+import {ButtonRoundedType} from '@components/base';
 // @configs
 import {appConfig} from '@app';
 // @hooks
 import {useTheme} from '@shared/hooks';
+import {useAppIntro, useAppIntroStyle} from './app-intro.hook';
 // @styles
 import {styles} from './app-intro.style';
 // @components
-import {Button, Container, ScreenWrapper, Typography} from '@components/base';
+import {
+  Container,
+  FilledButton,
+  ScreenWrapper,
+  Typography,
+} from '@components/base';
 
-const slideDatas: SlideData[] = [
+const slideData: SlideData[] = [
   {
     key: 'slide-1',
     title: 'Gain total control of your money',
@@ -38,26 +46,44 @@ const slideDatas: SlideData[] = [
 
 const _AppIntro: React.FC<AppIntroProps> = () => {
   const {theme} = useTheme();
+  const {slideIndex, handleIndexSwipeSlide} = useAppIntro();
+  const {containerStyle, containerSlidesStyle} = useAppIntroStyle();
+
+  const activeIndicatorConfig = useMemo(
+    () => ({
+      color: theme.color.primary as string,
+      margin: 3,
+      opacity: 1,
+      size: 14,
+    }),
+    [theme],
+  );
+
+  const inactiveIndicatorConfig = useMemo(() => {
+    return {
+      color: theme.color.placeholder as string,
+      margin: 3,
+      opacity: 0.5,
+      size: 8,
+    };
+  }, [theme]);
 
   const renderItem = useCallback(
     ({item, index}: {item: SlideData; index: number}) => {
       return (
-        <Container
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: theme.color.surface,
-          }}>
-          <Container style={{width: 310, height: 310}}>
-            <Image
-              source={item.image}
-              style={{width: '100%', height: '100%'}}
-            />
+        <Container style={[styles.containerSlides, containerSlidesStyle]}>
+          <Container style={styles.imageContainer}>
+            <Image source={item.image} style={styles.image} />
           </Container>
 
-          <Typography type={TypographyType.TITLE_HUGE} style={{fontWeight: '700', marginBottom: 20}}>{item.title}</Typography>
-          <Typography type={TypographyType.DESCRIPTION_MEDIUM}>
+          <Typography
+            type={TypographyType.TITLE_HUGE}
+            style={styles.titleStyle}>
+            {item.title}
+          </Typography>
+          <Typography
+            type={TypographyType.DESCRIPTION_MEDIUM}
+            style={styles.descriptionStyle}>
             {item.description}
           </Typography>
         </Container>
@@ -67,15 +93,70 @@ const _AppIntro: React.FC<AppIntroProps> = () => {
   );
 
   return (
-    <ScreenWrapper safeTopLayout style={{backgroundColor: theme.color.surface}} >
+    <ScreenWrapper safeTopLayout style={[styles.container, containerStyle]}>
       <Carousel
-        data={slideDatas}
+        data={slideData}
         width={appConfig.device.width}
-        height={appConfig.device.height / 1.4}
+        height={appConfig.device.height / 1.6}
         renderItem={renderItem}
+        pagingEnabled={false}
+        onSnapToItem={handleIndexSwipeSlide}
       />
 
-      <Button title={'Next'} />
+      <Container flex centerHorizontal noBackground>
+        <AnimatedDotsCarousel
+          length={slideData.length}
+          maxIndicators={4}
+          currentIndex={slideIndex}
+          interpolateOpacityAndColor={true}
+          activeIndicatorConfig={activeIndicatorConfig}
+          inactiveIndicatorConfig={inactiveIndicatorConfig}
+          decreasingDots={[
+            {
+              config: {
+                color: theme.color.surface as string,
+                margin: 3,
+                opacity: 0.5,
+                size: 6,
+              },
+              quantity: 1,
+            },
+            {
+              config: {
+                color: theme.color.surface as string,
+                margin: 3,
+                opacity: 0.5,
+                size: 4,
+              },
+              quantity: 1,
+            },
+          ]}
+        />
+      </Container>
+
+      <Container style={styles.containerButton}>
+        <FilledButton
+          renderTitleComponent={() => (
+            <Typography type={TypographyType.TITLE_SEMI_LARGE} onPrimary>
+              Sign Up
+            </Typography>
+          )}
+          primary
+          rounded={ButtonRoundedType.SMALL}
+          style={styles.signUpButton}
+        />
+
+        <FilledButton
+          renderTitleComponent={() => (
+            <Typography type={TypographyType.TITLE_SEMI_LARGE} onPrimary>
+              Sign In
+            </Typography>
+          )}
+          primary
+          rounded={ButtonRoundedType.SMALL}
+          style={styles.signInButton}
+        />
+      </Container>
     </ScreenWrapper>
   );
 };
