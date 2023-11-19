@@ -1,13 +1,15 @@
-import React, { ReactElement } from "react";
+import React, {ReactElement} from 'react';
 import {
   TouchableHighlightProps,
   TouchableOpacityProps,
   StyleProp,
-} from "react-native";
+} from 'react-native';
 // @types
-import { Children} from "../base.type";
-import { TextStyle, ViewStyle } from "@data/models";
-import { TypographyProps } from "../typography";
+import {Children} from '../base.type';
+import {TextStyle, ViewStyle} from '@data/models';
+import {TypographyProps} from '../typography';
+// @constants
+import {ButtonRoundedType} from './button.constant';
 
 export interface BaseButtonProps
   extends TouchableOpacityProps,
@@ -23,7 +25,7 @@ export interface BaseButtonProps
   renderTitleComponent?: (
     titleStyle: StyleProp<TextStyle>,
     buttonStyle?: StyleProp<ViewStyle>,
-    fontStyle?: StyleProp<TextStyle>
+    fontStyle?: StyleProp<TextStyle>,
   ) => Children;
   /**
    * return children for contentContainer customization  as you want.
@@ -32,3 +34,19 @@ export interface BaseButtonProps
 
   children?: Children;
 }
+
+export interface CommonButtonProps extends BaseButtonProps {
+  primary?: boolean;
+  primaryHighlight?: boolean;
+  secondary?: boolean;
+  secondaryHighlight?: boolean;
+  neutral?: boolean;
+  disabled?: boolean;
+  shadow?: boolean;
+}
+
+export interface SolidButtonProps extends CommonButtonProps {
+  rounded?: ButtonRoundedType;
+}
+
+export interface FilledButtonProps extends SolidButtonProps {}
