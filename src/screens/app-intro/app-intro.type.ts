@@ -1,8 +1,11 @@
 import {ImageSourcePropType} from 'react-native';
+import {AppScreenProps} from '@data/models';
 
-export interface AppIntroProps {}
+export interface AppIntroProps extends AppScreenProps<'AppIntro'> {}
 
-export type UseAppIntroProps = {};
+export type UseAppIntroProps = {
+  navigation?: AppIntroProps['navigation'];
+};
 
 export type SlideData = {
   key: string;

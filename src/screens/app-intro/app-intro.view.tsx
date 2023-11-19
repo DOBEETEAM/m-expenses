@@ -44,17 +44,22 @@ const slideData: SlideData[] = [
   },
 ];
 
-const _AppIntro: React.FC<AppIntroProps> = () => {
+const _AppIntro: React.FC<AppIntroProps> = ({navigation}) => {
   const {theme} = useTheme();
-  const {slideIndex, handleIndexSwipeSlide} = useAppIntro();
+  const {
+    slideIndex,
+    handleIndexSwipeSlide,
+    handleNavigateSignIn,
+    handleNavigateSignUp,
+  } = useAppIntro({navigation});
   const {containerStyle, containerSlidesStyle} = useAppIntroStyle();
 
   const activeIndicatorConfig = useMemo(
     () => ({
       color: theme.color.primary as string,
-      margin: 3,
+      margin: 2,
       opacity: 1,
-      size: 14,
+      size: 8,
     }),
     [theme],
   );
@@ -64,7 +69,7 @@ const _AppIntro: React.FC<AppIntroProps> = () => {
       color: theme.color.placeholder as string,
       margin: 3,
       opacity: 0.5,
-      size: 8,
+      size: 6,
     };
   }, [theme]);
 
@@ -99,8 +104,9 @@ const _AppIntro: React.FC<AppIntroProps> = () => {
         width={appConfig.device.width}
         height={appConfig.device.height / 1.6}
         renderItem={renderItem}
-        pagingEnabled={false}
         onSnapToItem={handleIndexSwipeSlide}
+        autoPlay
+        autoPlayInterval={2000}
       />
 
       <Container flex centerHorizontal noBackground>
@@ -136,24 +142,26 @@ const _AppIntro: React.FC<AppIntroProps> = () => {
 
       <Container style={styles.containerButton}>
         <FilledButton
+          onPress={handleNavigateSignUp}
           renderTitleComponent={() => (
             <Typography type={TypographyType.TITLE_SEMI_LARGE} onPrimary>
               Sign Up
             </Typography>
           )}
           primary
-          rounded={ButtonRoundedType.SMALL}
+          rounded={ButtonRoundedType.MEDIUM}
           style={styles.signUpButton}
         />
 
         <FilledButton
+          onPress={handleNavigateSignIn}
           renderTitleComponent={() => (
             <Typography type={TypographyType.TITLE_SEMI_LARGE} onPrimary>
               Sign In
             </Typography>
           )}
           primary
-          rounded={ButtonRoundedType.SMALL}
+          rounded={ButtonRoundedType.MEDIUM}
           style={styles.signInButton}
         />
       </Container>
