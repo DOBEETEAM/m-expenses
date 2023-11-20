@@ -1,4 +1,4 @@
-import {API_DOMAIN} from './api-list.constant';
+export const API_DOMAIN = 'http://localhost:3000';
 
 class _BaseApi {
   #_baseDomain = '';

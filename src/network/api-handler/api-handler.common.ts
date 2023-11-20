@@ -4,12 +4,12 @@ import {BaseApiHandler} from './api-handler.base';
 import {api as apiList} from '../api-list';
 
 export const commonApiHandler = {
-  signIn() {
-    const api = apiList.signIn;
-    return BaseApiHandler.get(api);
-  },
-  signUp() {
+  signUp<T>(data: any) {
     const api = apiList.signUp;
-    return BaseApiHandler.get(api);
+    return BaseApiHandler.post<T>(api, data);
+  },
+  signIn<T>() {
+    const api = apiList.signIn;
+    return BaseApiHandler.get<T>(api);
   },
 };

@@ -4,7 +4,8 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {ApiRequestor} from '@data/models/base';
 
 /**
- * This is base handler for API execution
+ * This is base handler for API execution. 
+ * It's designed by REST API and some http method: GET/POST/PUT/PATCH/DELETE
  * @author Đông Ngô <dongnbas@gmail.com>
  */
 class _BaseApiHandler {
@@ -12,7 +13,7 @@ class _BaseApiHandler {
 
   updateTokenAuthorization() {}
 
-  get(api: string, config: AxiosRequestConfig = {}) {
+  get<T>(api: string, config: AxiosRequestConfig = {}): ApiRequestor<T> {
     const controller = new AbortController();
 
     return {
@@ -23,8 +24,8 @@ class _BaseApiHandler {
             ...config,
             signal: controller.signal,
           })
-          .then(response => response.data)
-          .catch(error => {
+          .then((response) => response.data)
+          .catch((error) => {
             if (!axios.isCancel(error)) {
               throw error;
             }
@@ -48,8 +49,8 @@ class _BaseApiHandler {
             ...config,
             signal: controller.signal,
           })
-          .then(response => response.data)
-          .catch(error => {
+          .then((response) => response.data)
+          .catch((error) => {
             if (!axios.isCancel(error)) {
               throw error;
             }
