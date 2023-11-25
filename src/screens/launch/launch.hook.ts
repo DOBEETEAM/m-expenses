@@ -11,19 +11,29 @@ import {useAppSelector} from '@app/hooks';
 import {appSelector} from '@features/app';
 
 export function useLaunchModel({navigation}: UseLaunchProps) {
-  const {isAppIntro} = useAppSelector(appSelector);
+  const {isAppIntro, isLoggedIn} = useAppSelector(appSelector);
 
   const checkFirstTimeIntro = useCallback(() => {
-    if (isAppIntro) {
-      navigation.replace('AppIntro')
+    if (!isAppIntro) {
+      return false;
+    }
+
+    navigation.replace('AppIntro');
+    return true;
+  }, [isAppIntro, navigation]);
+
+  const checkAuth = useCallback(() => {
+    if (checkFirstTimeIntro()) {
       return;
     }
 
-    navigation.reset({
-      index: 0,
-      routes: [{name: 'BottomTab'}],
-    });
-  }, [isAppIntro, navigation]);
+    if (isLoggedIn) {
+      navigation.replace('BottomTab');
+      return;
+    }
+
+    navigation.replace('SignIn');
+  }, [checkFirstTimeIntro, isLoggedIn, navigation]);
 
   const initialApp = useCallback(async () => {
     await new Promise((resolve) =>
@@ -32,8 +42,8 @@ export function useLaunchModel({navigation}: UseLaunchProps) {
       }, 2000),
     );
 
-    checkFirstTimeIntro();
-  }, [checkFirstTimeIntro]);
+    checkAuth();
+  }, [checkAuth]);
 
   useEffect(() => {
     initialApp().finally(async () => {

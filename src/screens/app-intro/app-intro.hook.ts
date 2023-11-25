@@ -4,9 +4,13 @@ import {UseAppIntroProps} from './app-intro.type';
 import {ViewStyle} from '@data/models';
 // @hooks
 import {useTheme} from '@shared/hooks';
+import {useAppDispatch} from '@app/hooks';
+// @others
+import {setAppIntro} from '@features/app';
 
 export function useAppIntro({navigation}: UseAppIntroProps) {
   const [slideIndex, setSlideIndex] = useState(0);
+  const dispatch = useAppDispatch();
 
   const handleIndexSwipeSlide = useCallback((index: number) => {
     setSlideIndex(index);
@@ -20,13 +24,15 @@ export function useAppIntro({navigation}: UseAppIntroProps) {
     navigation?.replace('SignUp');
   }, [navigation]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    dispatch(setAppIntro(false));
+  }, [dispatch]);
 
   return {
     slideIndex,
     handleIndexSwipeSlide,
     handleNavigateSignIn,
-    handleNavigateSignUp
+    handleNavigateSignUp,
   };
 }
 

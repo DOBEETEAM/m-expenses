@@ -4,10 +4,12 @@ import {RootState} from '@app';
 
 interface InitialState {
   isAppIntro: boolean;
+  isLoggedIn: boolean;
 }
 
 const initialState: InitialState = {
   isAppIntro: true,
+  isLoggedIn: false,
 };
 
 const appSlice = createSlice({
@@ -16,6 +18,9 @@ const appSlice = createSlice({
   reducers: {
     setAppIntro(state, action: PayloadAction<boolean>) {
       state.isAppIntro = action.payload;
+    },
+    setLoggedIn(state) {
+      state.isLoggedIn = true;
     },
   },
 });
