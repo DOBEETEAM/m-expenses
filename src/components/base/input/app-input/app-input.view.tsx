@@ -30,7 +30,15 @@ const _AppInput: React.FC<AppInputProps> = ({
   iconLeftBundle = BundleIconSetName.ANT_DESIGN,
   iconLeftName = '',
   iconLeftStyle = {},
+  iconLeftOnPress,
+  
+  iconRightBundle = BundleIconSetName.ANT_DESIGN,
+  iconRightName = '',
+  iconRightStyle = {},
+  iconRightOnPress,
+
   containerStyle = {},
+
   ...inputProps
 }) => {
   const {theme} = useTheme();
@@ -44,6 +52,16 @@ const _AppInput: React.FC<AppInputProps> = ({
       iconLeftStyle,
     ];
   }, [theme, iconLeftStyle]);
+
+  const iconRightStyles = useMemo(() => {
+    return [
+      styles.iconLeft,
+      {
+        color: theme.color.iconInactive,
+      },
+      iconRightStyle,
+    ];
+  }, [theme, iconRightStyle]);
 
   const containerBaseStyle = useMemo(() => {
     return [
@@ -66,12 +84,21 @@ const _AppInput: React.FC<AppInputProps> = ({
     <Container row style={containerBaseStyle}>
       {!!iconLeftName && (
         <Icon
+          onPress={iconLeftOnPress}
           bundle={iconLeftBundle}
           name={iconLeftName}
           style={iconStyle as any}
         />
       )}
       <Input {...inputProps} style={inputStyle} />
+      {!!iconRightName && (
+        <Icon
+          onPress={iconRightOnPress}
+          bundle={iconRightBundle}
+          name={iconRightName}
+          style={iconRightStyles as any}
+        />
+      )}
     </Container>
   );
 };
