@@ -31,8 +31,10 @@ const styles = StyleSheet.create({
 
 const _NavBarWrapper = ({
   children,
-  appNavBar,
+  appNavBar = true,
+
   containerStyle,
+  
   ...props
 }: NavBarWrapperProps) => {
   const edges: Array<Edge> = useMemo(() => {

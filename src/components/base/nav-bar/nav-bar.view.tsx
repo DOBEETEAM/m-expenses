@@ -51,7 +51,7 @@ const _NavBar: React.FC<NavBarProps> = ({
 
   title = '',
 
-  onBack = () => {},
+  onBack,
 
   renderLeft = undefined,
   renderRight = undefined,
@@ -113,7 +113,7 @@ const _NavBar: React.FC<NavBarProps> = ({
   }, [backgroundStyle, noBackground, props.containerStyle]);
 
   return (
-    <NavBarWrapper {...props} style={containerStyle}>
+    <NavBarWrapper {...props} containerStyle={containerStyle}>
       {renderHeader ? (
         renderHeader()
       ) : (

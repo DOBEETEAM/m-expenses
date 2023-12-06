@@ -8,7 +8,7 @@ import {
 import {Children} from '../base.type';
 import {TextStyle, ViewStyle} from '@data/models';
 import {TypographyProps} from '../typography';
-import {IconProps} from '../icon';
+import {BundleIcon, IconProps} from '../icon';
 // @constants
 import {ButtonRoundedType} from './button.constant';
 
@@ -52,11 +52,11 @@ export interface SolidButtonProps extends CommonButtonProps {
 
 export interface FilledButtonProps extends SolidButtonProps {}
 
-export interface IconButtonProps
-  extends CommonButtonProps,
-    Omit<IconProps, 'children'> {
-  style?: StyleProp<ViewStyle>;
+export interface IconButtonProps extends CommonButtonProps {
+  // style?: StyleProp<ViewStyle>;
   iconStyle?: StyleProp<TextStyle>;
+  bundle?: BundleIcon;
+  name: string;
 
-  iconProps?: Omit<IconProps, 'name'> & {name?: string};
+  iconProps?: Omit<IconProps, 'children'>;
 }

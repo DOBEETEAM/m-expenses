@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import {AnyStyle} from '@data/models/base';
 import {FilledButtonProps} from './button.type';
 import {Ref} from '../base.type';
-import { Theme } from '@resources/theme';
+import {Theme} from '@resources/theme';
 // @hooks
 import {useTheme} from '@shared';
 // @constants
