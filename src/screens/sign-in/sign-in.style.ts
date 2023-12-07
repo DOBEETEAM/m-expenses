@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginHorizontal: 25,
-    marginBottom: 30,
-    marginTop: 45,
+    marginBottom: 20,
+    marginTop: 40,
   },
   imageContainer: {
     width: '100%',
@@ -14,5 +14,11 @@ export const styles = StyleSheet.create({
   },
   containerForm: {
     marginHorizontal: 12,
+  },
+  titleForm: {
+    fontWeight: 'bold'
+  },
+  descriptionForm: {
+    marginVertical: 10
   },
 });

@@ -1,39 +1,52 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {StyleSheet, Keyboard} from 'react-native';
-// @packages
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
 // @types
 import {AuthFormProps} from './auth-form.type';
 import {ButtonRoundedType} from '@components/base';
-import {TypographyType} from '@resources/theme';
+import {Theme, TypographyType} from '@resources/theme';
+// @hooks
+import {useTheme} from '@shared/hooks';
 // @constants
 import {BundleIconSetName} from '@components/base';
 // @components
 import {AppInput, Container, FilledButton, Typography} from '@components/base';
 
-import {useTheme} from '@shared/hooks';
-
-export const styles = StyleSheet.create({
-  container: {},
-  input: {
-    marginVertical: 12,
-  },
-  buttonSubmit: {
-    paddingVertical: 15,
-    marginVertical: 15,
-  },
-});
+export const createStyles = (theme: Theme) => {
+  return StyleSheet.create({
+    container: {},
+    input: {
+      marginVertical: 12,
+    },
+    buttonSubmit: {
+      paddingVertical: 15,
+      marginVertical: 15,
+    },
+    error: {
+      color: theme.color.danger,
+      marginTop: -10,
+      marginLeft: 10,
+    },
+  });
+};
 
 const _AuthForm: React.FC<AuthFormProps> = ({
-  renderForm,
   formSchema,
   buttonTitle,
   containerFormStyle,
 
-  ...props
+  onSubmit,
 }) => {
   const {theme} = useTheme();
+  const styles = createStyles(theme);
   const [securityPassword, setSecurityPassword] = useState(true);
+
+  const handleSubmit = useCallback(() => {
+    if (!onSubmit) {
+      return;
+    }
+
+    onSubmit();
+  }, [onSubmit]);
 
   const handleToggleHidePassword = useCallback(() => {
     setSecurityPassword((prevState) => !prevState);
@@ -52,44 +65,66 @@ const _AuthForm: React.FC<AuthFormProps> = ({
   );
 
   const renderBaseForm = useCallback(() => {
+    if (!formSchema) {
+      return null;
+    }
+
     return formSchema.map((form, index) => {
       switch (form.fieldType) {
         case 'email':
           return (
-            <AppInput
-              key={index}
-              onChangeText={form.onChangeText}
-              value={form.value}
-              placeholder={form.placeholder}
-              containerStyle={styles.input}
-            />
+            <React.Fragment key={index}>
+              <AppInput
+                onChangeText={form.onChangeText}
+                value={form.value}
+                placeholder={form.placeholder}
+                containerStyle={styles.input}
+              />
+              {form.error && (
+                <Typography type={TypographyType.CAPTION} style={styles.error}>
+                  {form.error}
+                </Typography>
+              )}
+            </React.Fragment>
           );
         case 'password':
           return (
-            <AppInput
-              key={index}
-              value={form.value}
-              onChangeText={form.onChangeText}
-              placeholder={form.placeholder}
-              secureTextEntry={securityPassword}
-              iconRightOnPress={handleToggleHidePassword}
-              iconRightBundle={BundleIconSetName.IONICONS}
-              iconRightName={
-                securityPassword ? 'eye-off-outline' : 'eye-outline'
-              }
-              iconRightStyle={iconInputRightStyle}
-              containerStyle={styles.input}
-            />
+            <React.Fragment key={index}>
+              <AppInput
+                value={form.value}
+                onChangeText={form.onChangeText}
+                placeholder={form.placeholder}
+                secureTextEntry={securityPassword}
+                iconRightOnPress={handleToggleHidePassword}
+                iconRightBundle={BundleIconSetName.IONICONS}
+                iconRightName={
+                  securityPassword ? 'eye-off-outline' : 'eye-outline'
+                }
+                iconRightStyle={iconInputRightStyle}
+                containerStyle={styles.input}
+              />
+              {form.error && (
+                <Typography type={TypographyType.CAPTION} style={styles.error}>
+                  {form.error}
+                </Typography>
+              )}
+            </React.Fragment>
           );
         default:
           return (
-            <AppInput
-              key={index}
-              onChangeText={form.onChangeText}
-              value={form.value}
-              placeholder={form.placeholder}
-              containerStyle={styles.input}
-            />
+            <React.Fragment key={index}>
+              <AppInput
+                onChangeText={form.onChangeText}
+                value={form.value}
+                placeholder={form.placeholder}
+                containerStyle={styles.input}
+              />
+              {form.error && (
+                <Typography type={TypographyType.CAPTION} style={styles.error}>
+                  {form.error}
+                </Typography>
+              )}
+            </React.Fragment>
           );
       }
     });
@@ -108,16 +143,15 @@ const _AuthForm: React.FC<AuthFormProps> = ({
 
   return (
     <Container style={containerForm}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        {renderForm ? renderForm() : renderBaseForm()}
+      {renderBaseForm()}
 
-        <FilledButton
-          rounded={ButtonRoundedType.LARGE}
-          primary
-          renderTitleComponent={renderButtonTitle}
-          style={styles.buttonSubmit}
-        />
-      </TouchableWithoutFeedback>
+      <FilledButton
+        rounded={ButtonRoundedType.LARGE}
+        primary
+        renderTitleComponent={renderButtonTitle}
+        style={styles.buttonSubmit}
+        onPress={handleSubmit}
+      />
     </Container>
   );
 };

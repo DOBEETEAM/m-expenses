@@ -1,4 +1,4 @@
-import { ColorValue } from "react-native";
+import {ColorValue} from 'react-native';
 
 export type CoreCommonColor = {
   // Core
@@ -151,13 +151,26 @@ export type SystemColor = SystemCommonColor & {
   indicator: ColorValue;
 };
 
-export type Color = CoreColor & SystemColor;
+export type AdditionColor = {
+  danger: ColorValue;
+  warning: ColorValue;
+  success: ColorValue;
+  info: ColorValue;
+  other: ColorValue;
+  facebook: ColorValue;
+  youtube: ColorValue;
+};
+
+export type Color = CoreColor & SystemColor & AdditionColor;
 
 export type GetCoreColor = <T extends CoreCommonColor>(colors: T) => CoreColor;
 export type GetSystemCommonColor = <T extends CoreColor>(
-  colors: T
+  colors: T,
 ) => SystemCommonColor;
 export type GetSystemColor = <T extends CoreColor>(
   colors: T,
-  systemCommonColors: SystemCommonColor
+  systemCommonColors: SystemCommonColor,
 ) => SystemColor;
+export type GetAdditionColor = <T extends SystemColor>(
+  colors: T,
+) => AdditionColor;

@@ -2,11 +2,11 @@ import {ViewStyle} from '@data/models';
 import {Children} from '@components/base/base.type';
 
 export interface AuthFormProps {
-  formSchema: FormSchema[];
+  formSchema?: FormSchema[];
   buttonTitle: string;
   containerFormStyle?: ViewStyle;
 
-  renderForm?: () => Children;
+  onSubmit?: () => void;
 }
 
 export interface FormSchema {
@@ -14,5 +14,6 @@ export interface FormSchema {
   label?: string;
   value: string | undefined;
   placeholder?: string;
-  onChangeText: (text: string) => void | undefined;
+  onChangeText?: (e: string) => void;
+  error?: string;
 }
