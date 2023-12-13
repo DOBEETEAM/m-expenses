@@ -9,7 +9,13 @@ import {useTheme} from '@shared/hooks';
 // @constants
 import {BundleIconSetName} from '@components/base';
 // @components
-import {AppInput, Container, FilledButton, Typography} from '@components/base';
+import {
+  AppInput,
+  Container,
+  FilledButton,
+  Typography,
+  CheckBox,
+} from '@components/base';
 
 export const createStyles = (theme: Theme) => {
   return StyleSheet.create({
@@ -26,6 +32,11 @@ export const createStyles = (theme: Theme) => {
       marginTop: -10,
       marginLeft: 10,
     },
+    checkBox: {
+      width: 30,
+      height: 30,
+      marginRight: 5,
+    },
   });
 };
 
@@ -39,14 +50,6 @@ const _AuthForm: React.FC<AuthFormProps> = ({
   const {theme} = useTheme();
   const styles = createStyles(theme);
   const [securityPassword, setSecurityPassword] = useState(true);
-
-  const handleSubmit = useCallback(() => {
-    if (!onSubmit) {
-      return;
-    }
-
-    onSubmit();
-  }, [onSubmit]);
 
   const handleToggleHidePassword = useCallback(() => {
     setSecurityPassword((prevState) => !prevState);
@@ -110,6 +113,19 @@ const _AuthForm: React.FC<AuthFormProps> = ({
               )}
             </React.Fragment>
           );
+        case 'agreement':
+          return (
+            <Container noBackground key={index} row style={{marginVertical: 4}}>
+              <CheckBox
+                value={form.isAgree}
+                onPress={form.onChangeCheckbox}
+                style={styles.checkBox}
+              />
+              <Typography type={TypographyType.LABEL_SMALL} style={{paddingHorizontal: 12}}>
+                {form.placeholder}
+              </Typography>
+            </Container>
+          );
         default:
           return (
             <React.Fragment key={index}>
@@ -142,7 +158,7 @@ const _AuthForm: React.FC<AuthFormProps> = ({
   }, [buttonTitle]);
 
   return (
-    <Container style={containerForm}>
+    <Container noBackground style={containerForm}>
       {renderBaseForm()}
 
       <FilledButton
@@ -150,7 +166,7 @@ const _AuthForm: React.FC<AuthFormProps> = ({
         primary
         renderTitleComponent={renderButtonTitle}
         style={styles.buttonSubmit}
-        onPress={handleSubmit}
+        onPress={onSubmit}
       />
     </Container>
   );

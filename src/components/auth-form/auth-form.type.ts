@@ -12,8 +12,13 @@ export interface AuthFormProps {
 export interface FormSchema {
   fieldType: 'email' | 'password' | string;
   label?: string;
-  value: string | undefined;
+  value?: string | undefined;
   placeholder?: string;
   onChangeText?: (e: string) => void;
   error?: string;
+  /**
+   * using for CheckBox
+   */
+  isAgree?: boolean;
+  onChangeCheckbox?: () => void;
 }

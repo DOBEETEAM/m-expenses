@@ -7,3 +7,4 @@ export * from './screen-wrapper';
 export * from './status-bar';
 export * from './input';
 export * from './nav-bar';
+export * from './check-box';
