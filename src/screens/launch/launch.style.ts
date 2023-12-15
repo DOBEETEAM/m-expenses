@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { appConfig } from '@app';
 
 export const styles = StyleSheet.create({
   screenContainer: {
@@ -6,7 +7,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoContainer: {
-    marginBottom: 40,
+    marginTop: appConfig.device.width / 2,
+    marginBottom: appConfig.device.width / 2,
     width: 200,
     height: 200,
   },
