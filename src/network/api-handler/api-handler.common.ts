@@ -8,8 +8,8 @@ export const commonApiHandler = {
     const api = apiList.signUp;
     return BaseApiHandler.post<T>(api, data);
   },
-  signIn<T>() {
+  signIn() {
     const api = apiList.signIn;
-    return BaseApiHandler.get<T>(api);
+    return BaseApiHandler.get(api);
   },
 };

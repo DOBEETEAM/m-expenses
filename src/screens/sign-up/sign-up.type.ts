@@ -1,3 +1,7 @@
-export interface SignUpProps {}
+import {AppScreenProps} from '@data/models';
 
-export type UseSignUpProps = {}
+export interface SignUpProps extends AppScreenProps<'SignUp'> {}
+
+export type UseSignUpProps = {
+  navigation?: SignUpProps['navigation'];
+};
