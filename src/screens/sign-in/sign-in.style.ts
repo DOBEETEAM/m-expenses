@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   logoContainer: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     marginHorizontal: 25,
     marginBottom: 20,
     marginTop: 40,

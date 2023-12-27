@@ -19,7 +19,7 @@ const _Launch: React.FC<LaunchProps> = ({navigation}) => {
     <ScreenWrapper safeTopLayout style={[styles.screenContainer, screenContainerStyle]}>
       <Container noBackground style={styles.logoContainer}>
         <Image
-          source={require('@assets/logo/icon-android-foreground.png')}
+          source={require('@assets/logo/icon-android-legacy.png')}
           style={styles.imageContainer}
         />
       </Container>

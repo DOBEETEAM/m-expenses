@@ -57,7 +57,7 @@ export function useLaunchStyle() {
 
   const screenContainerStyle: ViewStyle = useMemo(
     () => ({
-      backgroundColor: theme.color.white,
+      backgroundColor: theme.color.surface,
     }),
     [theme],
   );

@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     flex: 1,
     height: '100%',
     paddingHorizontal: 10,
+    paddingVertical: 15,
+    fontSize: 14,
   },
 });
 
@@ -31,7 +33,7 @@ const _AppInput: React.FC<AppInputProps> = ({
   iconLeftName = '',
   iconLeftStyle = {},
   iconLeftOnPress,
-  
+
   iconRightBundle = BundleIconSetName.ANT_DESIGN,
   iconRightName = '',
   iconRightStyle = {},
