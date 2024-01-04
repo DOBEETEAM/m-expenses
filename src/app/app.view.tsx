@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, LogBox} from 'react-native';
+import {StyleSheet, LogBox, useColorScheme} from 'react-native';
 // @packages
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -16,7 +16,7 @@ import {ThemeProvider} from '@shared';
 // @navigation
 import RootNavigator from '@routes';
 // @constants
-import {BASE_LIGHT_THEME} from '@resources/theme';
+import {BASE_DARK_THEME, BASE_LIGHT_THEME} from '@resources/theme';
 // @components
 import {StatusBar} from '@components/base';
 
@@ -35,10 +35,15 @@ const styles = StyleSheet.create({
 });
 
 export default function App() {
+  const colorScheme = useColorScheme();
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider initial={BASE_LIGHT_THEME}>
+        <ThemeProvider
+          initial={
+            colorScheme === 'light' ? BASE_LIGHT_THEME : BASE_DARK_THEME
+          }>
           <SafeAreaProvider>
             <StatusBar />
             <GestureHandlerRootView style={styles.container}>

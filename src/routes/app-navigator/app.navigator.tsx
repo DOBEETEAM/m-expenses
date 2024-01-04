@@ -35,7 +35,7 @@ export function AppNavigator() {
       <AppStack.Screen name='SignIn' component={SignIn} />
       <AppStack.Screen name='SignUp' component={SignUp} />
 
-      <AppStack.Screen name={'BottomTab'} component={BottomTabNavigator} />
+      <AppStack.Screen name='BottomTab' component={BottomTabNavigator} />
     </AppStack.Navigator>
   );
 }
