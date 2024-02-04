@@ -12,7 +12,7 @@ import {appConfig} from '@app/app.config';
 // @hooks
 import {useTheme} from '@shared/hooks';
 // @components
-import {NavBarWrapper} from './nav-bar-wrapper';
+import {NavBarWrapper} from '@components/base';
 import {Typography} from '../typography';
 import {Container} from '../container';
 import { IconButton } from '../button';
@@ -117,7 +117,7 @@ const _NavBar: React.FC<NavBarProps> = ({
       {renderHeader ? (
         renderHeader()
       ) : (
-        <Container noBackground flex row>
+        <Container noBackground flex row centerVertical>
           <Container noBackground row style={styles.leftContainer}>
             {back && (renderBack ? renderBack(backStyle) : renderBaseBack())}
             {renderLeft && renderLeft()}

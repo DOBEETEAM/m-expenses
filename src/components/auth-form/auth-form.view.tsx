@@ -15,6 +15,7 @@ import {
   FilledButton,
   Typography,
   CheckBox,
+  Button,
 } from '@components/base';
 
 export const createStyles = (theme: Theme) => {
@@ -121,8 +122,19 @@ const _AuthForm: React.FC<AuthFormProps> = ({
                 onPress={form.onChangeCheckbox}
                 style={styles.checkBox}
               />
-              <Typography type={TypographyType.LABEL_SMALL} style={{paddingHorizontal: 12}}>
+              <Typography
+                type={TypographyType.LABEL_SMALL}
+                style={{
+                  paddingHorizontal: 12,
+                }}>
                 {form.placeholder}
+                {form.placeholderTermsAgree && (
+                  <Button useContentContainer>
+                    <Typography type={TypographyType.LABEL_SMALL_PRIMARY}>
+                      {form.placeholderTermsAgree}
+                    </Typography>
+                  </Button>
+                )}
               </Typography>
             </Container>
           );

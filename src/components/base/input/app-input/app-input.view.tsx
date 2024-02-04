@@ -82,7 +82,7 @@ const _AppInput: React.FC<AppInputProps> = ({
   }, [inputProps?.style]);
 
   return (
-    <Container row style={containerBaseStyle}>
+    <Container row centerVertical style={containerBaseStyle}>
       {!!iconLeftName && (
         <Icon
           onPress={iconLeftOnPress}

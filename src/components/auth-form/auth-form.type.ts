@@ -1,5 +1,4 @@
 import {ViewStyle} from '@data/models';
-import {Children} from '@components/base/base.type';
 
 export interface AuthFormProps {
   formSchema?: FormSchema[];
@@ -21,4 +20,5 @@ export interface FormSchema {
    */
   isAgree?: boolean;
   onChangeCheckbox?: () => void;
+  placeholderTermsAgree?: string;
 }

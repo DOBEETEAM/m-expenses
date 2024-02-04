@@ -2,7 +2,7 @@ import {useCallback, useEffect, useMemo} from 'react';
 // @packages
 import BootSplash from 'react-native-bootsplash';
 // @types
-import {UseLaunchProps} from './launch.type';
+import {UseLaunchProps} from '@screens/launch';
 import {useTheme} from '@shared/hooks';
 import {ViewStyle} from '@data/models';
 // @hooks

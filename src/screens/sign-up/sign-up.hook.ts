@@ -4,7 +4,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 // @types
 import {ViewStyle} from '@data/models';
-import {UseSignUpProps} from './sign-up.type';
+import {UseSignUpProps} from '@screens/sign-up';
 import {FormSchema} from '@components/auth-form';
 // @hooks
 import {useTheme} from '@shared/hooks';
@@ -15,7 +15,7 @@ export type FormValue = {
   password: string;
 };
 
-export function useSignUp(props: UseSignUpProps) {
+export function useSignUp({navigation}: UseSignUpProps) {
   const [agreed, setAgreed] = useState(false);
   const [initialValues] = useState<FormValue>({
     name: '',
@@ -23,14 +23,21 @@ export function useSignUp(props: UseSignUpProps) {
     password: '',
   });
 
-  const handleSignUp = useCallback(async (values: FormValue) => {
-    console.log(values, agreed);
-  }, [agreed]);
+  const handleSignUp = useCallback(
+    async (values: FormValue) => {
+      console.log(values, agreed);
+    },
+    [agreed],
+  );
+
+  const handleNavigationSignIn = useCallback(() => {
+    navigation?.goBack();
+  }, [navigation]);
 
   const validationSchema = useMemo(
     () =>
       Yup.object().shape({
-        name: Yup.string().required("Haven't enterer your name yet."),
+        name: Yup.string().required("Haven't entered your name yet."),
         email: Yup.string()
           .required("Haven't entered your email yet")
           .email('must be a valid email'),
@@ -76,14 +83,16 @@ export function useSignUp(props: UseSignUpProps) {
       fieldType: 'agreement',
       label: 'Agreement',
       isAgree: agreed,
-      placeholder: 'By signing up, you agree to the Terms of Service and Privacy Policy',
+      placeholder: 'By signing up, you agree to the',
       onChangeCheckbox: () => setAgreed(!agreed),
+      placeholderTermsAgree: 'Terms of Service and Privacy Policy',
     },
   ];
 
   return {
     signUpSchema,
     handleSubmit,
+    handleNavigationSignIn
   };
 }
 

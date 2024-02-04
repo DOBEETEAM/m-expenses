@@ -1,15 +1,15 @@
-import React, { forwardRef } from "react";
-import { View, Animated, StyleSheet } from "react-native";
+import React, {forwardRef} from 'react';
+import {View, Animated, StyleSheet} from 'react-native';
 // @packages
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @types
-import { ContainerProps } from "./container.type";
-import { Ref } from "../base.type";
-import { Theme } from "@resources/theme";
-import { useTheme } from "@shared/hooks";
+import {ContainerProps} from './container.type';
+import {Ref} from '../base.type';
+import {Theme} from '@resources/theme';
+import {useTheme} from '@shared/hooks';
 
 const createStyles = (theme: Theme) => {
-  const styles = StyleSheet.create({
+  return StyleSheet.create({
     surface: {
       backgroundColor: theme.color.surface,
     },
@@ -20,35 +20,33 @@ const createStyles = (theme: Theme) => {
       flex: 1,
     },
     row: {
-      flexDirection: "row",
+      flexDirection: 'row',
     },
     rowCenterVertical: {
-      alignItems: "center",
+      alignItems: 'center',
       justifyContent: undefined,
     },
     rowCenterHorizontal: {
-      justifyContent: "center",
+      justifyContent: 'center',
       alignItems: undefined,
     },
     centerHorizontal: {
-      alignItems: "center",
+      alignItems: 'center',
       justifyContent: undefined,
     },
     centerVertical: {
-      justifyContent: "center",
+      justifyContent: 'center',
       alignItems: undefined,
     },
     center: {
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     shadow: {
       shadowColor: theme.color.shadow,
       ...theme.layout.shadow,
     },
   });
-
-  return styles;
 };
 
 const _Container = forwardRef(
@@ -72,10 +70,10 @@ const _Container = forwardRef(
 
       ...props
     }: ContainerProps,
-    ref: Ref
+    ref: Ref,
   ) => {
-    const { theme } = useTheme();
-    const { top, bottom } = useSafeAreaInsets();
+    const {theme} = useTheme();
+    const {top, bottom} = useSafeAreaInsets();
 
     const styles = React.useMemo(() => {
       const baseStyles: any = createStyles(theme);
@@ -83,20 +81,20 @@ const _Container = forwardRef(
       const centerVertical =
         centerVerticalProp !== undefined
           ? centerVerticalProp
-          : row
-          ? true
-          : undefined;
+          : // : row
+            // ? true
+            undefined;
 
       if (flex) {
-        additionalStyle = { ...additionalStyle, ...baseStyles.flex };
+        additionalStyle = {...additionalStyle, ...baseStyles.flex};
       }
 
       if (row) {
-        additionalStyle = { ...additionalStyle, ...baseStyles.row };
+        additionalStyle = {...additionalStyle, ...baseStyles.row};
       }
 
       if (center) {
-        additionalStyle = { ...additionalStyle, ...baseStyles.center };
+        additionalStyle = {...additionalStyle, ...baseStyles.center};
       }
 
       if (centerHorizontal) {
@@ -122,8 +120,8 @@ const _Container = forwardRef(
           ? baseStyles.contentContainer
           : baseStyles.surface,
 
-        safeLayout && { paddingBottom: bottom },
-        safeTopLayout && { paddingTop: top },
+        safeLayout && {paddingBottom: bottom},
+        safeTopLayout && {paddingTop: top},
         shadow && baseStyles.shadow,
         additionalStyle,
       ];
@@ -138,7 +136,7 @@ const _Container = forwardRef(
       centerHorizontal,
       centerVerticalProp,
       noBackground,
-      content
+      content,
     ]);
 
     const componentStyles = React.useMemo(() => {
@@ -158,7 +156,7 @@ const _Container = forwardRef(
         {children}
       </Wrapper>
     );
-  }
+  },
 );
 
 export const Container = React.memo(_Container);
