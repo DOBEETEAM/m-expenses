@@ -40,7 +40,7 @@ export function useSignUp({navigation}: UseSignUpProps) {
         name: Yup.string().required("Haven't entered your name yet."),
         email: Yup.string()
           .required("Haven't entered your email yet")
-          .email('must be a valid email'),
+          .email('Must be a valid email'),
         password: Yup.string()
           .required("Haven't entered your password yet")
           .min(4),
@@ -106,7 +106,14 @@ export function useSignUpStyle() {
     [theme],
   );
 
+  const signUpGoogleButtonStyle: ViewStyle = useMemo(() => ({
+    borderWidth: theme.layout.borderWidthSmall,
+    borderColor: theme.color.border,
+    borderRadius: theme.layout.borderRadiusSmall,
+  }), [theme])
+
   return {
     containerStyle,
+    signUpGoogleButtonStyle
   };
 }

@@ -3,5 +3,6 @@ export type AppStackParamList = {
   AppIntro: undefined;
   SignIn: undefined;
   SignUp: undefined;
+  ForgotPassword: undefined;
   BottomTab: undefined;
 };

@@ -24,9 +24,10 @@ import {AuthForm} from '@components/auth-form';
 import {styles} from './sign-up.style';
 
 const _SignUp: React.FC<SignUpProps> = ({navigation}) => {
-  const {theme} = useTheme();
-  const {signUpSchema, handleSubmit, handleNavigationSignIn} = useSignUp({navigation});
-  const {containerStyle} = useSignUpStyle();
+  const {signUpSchema, handleSubmit, handleNavigationSignIn} = useSignUp({
+    navigation,
+  });
+  const {containerStyle, signUpGoogleButtonStyle} = useSignUpStyle();
 
   return (
     <ScreenWrapper style={containerStyle}>
@@ -49,22 +50,10 @@ const _SignUp: React.FC<SignUpProps> = ({navigation}) => {
           </Typography>
 
           <Button
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderWidth: theme.layout.borderWidthSmall,
-              borderColor: theme.color.border,
-              borderRadius: theme.layout.borderRadiusSmall,
-              paddingVertical: 15,
-              marginVertical: 12,
-            }}
+            style={[styles.signUpGoogleButton, signUpGoogleButtonStyle]}
             renderTitleComponent={() => (
               <Container row>
-                <Icon
-                  name={'logo-google'}
-                  style={{fontSize: 20, marginRight: 10}}
-                />
+                <Icon name={'logo-google'} style={styles.iconStyle} />
                 <Typography type={TypographyType.LABEL_LARGE}>
                   Sign Up with Google
                 </Typography>
@@ -72,7 +61,7 @@ const _SignUp: React.FC<SignUpProps> = ({navigation}) => {
             )}
           />
 
-          <Container  row centerHorizontal >
+          <Container row centerHorizontal style={{marginTop: 5}}>
             <Typography type={TypographyType.CAPTION}>
               Already have an account?
             </Typography>

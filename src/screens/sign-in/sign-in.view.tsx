@@ -1,19 +1,16 @@
 import React from 'react';
 import {
   Image,
-  Keyboard,
   KeyboardAvoidingView,
-  TouchableOpacity,
 } from 'react-native';
 // @packages
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 // @types
 import {SignInProps} from './sign-in.type';
 import {TypographyType} from '@resources/theme';
 // @configs
 import {appConfig} from '@app/app.config';
 // @hooks
-import {useApiRequestor, useTheme} from '@shared/hooks';
+import {useTheme} from '@shared/hooks';
 import {useSignIn, useSignInStyle} from './sign-in.hook';
 // @components
 import {Button, Container, ScreenWrapper, Typography} from '@components/base';
@@ -22,8 +19,12 @@ import {AuthForm} from '@components/auth-form';
 import {styles} from './sign-in.style';
 
 const _SignIn: React.FC<SignInProps> = ({navigation}) => {
-  const {theme} = useTheme();
-  const {signInSchema, handleNavigateSignUp, handleSubmit} = useSignIn({
+  const {
+    signInSchema,
+    handleNavigateSignUp,
+    handleSubmit,
+    handleForgotPassword,
+  } = useSignIn({
     navigation,
   });
   const {containerStyle} = useSignInStyle();
@@ -56,7 +57,9 @@ const _SignIn: React.FC<SignInProps> = ({navigation}) => {
           />
 
           <Container center noBackground style={{marginTop: 15}}>
-            <Button typoProps={{type: TypographyType.LABEL_MEDIUM_PRIMARY}}>
+            <Button
+              typoProps={{type: TypographyType.LABEL_MEDIUM_PRIMARY}}
+              onPress={handleForgotPassword}>
               Forgot password?
             </Button>
 

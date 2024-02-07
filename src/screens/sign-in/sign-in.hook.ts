@@ -4,7 +4,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 // @types
 import {ViewStyle} from '@data/models';
-import {UseSignInProps} from './sign-in.type';
+import {UseSignInProps} from '@screens/sign-in';
 import {FormSchema} from '@components/auth-form';
 // @hooks
 import {useTheme} from '@shared/hooks';
@@ -23,6 +23,10 @@ export function useSignIn({navigation}: UseSignInProps) {
   const handleSignIn = useCallback(async (values: FormValue) => {
     console.log(values);
   }, []);
+
+  const handleForgotPassword = useCallback(() => {
+    navigation?.navigate('ForgotPassword');
+  }, [navigation]);
 
   const handleNavigateSignUp = useCallback(() => {
     navigation?.navigate('SignUp');
@@ -69,6 +73,7 @@ export function useSignIn({navigation}: UseSignInProps) {
   return {
     signInSchema,
     handleNavigateSignUp,
+    handleForgotPassword,
     handleSubmit,
   };
 }

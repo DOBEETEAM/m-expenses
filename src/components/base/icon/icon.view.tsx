@@ -9,9 +9,7 @@ import {BUNDLE_ICON_SETS, BundleIconSetName} from './icon.constant';
 const _Icon = React.forwardRef(
   ({bundle = BundleIconSetName.IONICONS, ...props}: IconProps, ref: Ref) => {
     const IconComponent = useMemo(() => {
-      let IconComp = BUNDLE_ICON_SETS[bundle];
-
-      return IconComp;
+      return BUNDLE_ICON_SETS[bundle];
     }, [bundle]);
 
     return <IconComponent {...props} ref={ref} />;
