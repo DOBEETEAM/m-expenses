@@ -1,6 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
+  containerLoading: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 10,
+  },
   logoContainer: {
     width: 120,
     height: 120,
@@ -16,9 +24,9 @@ export const styles = StyleSheet.create({
     marginHorizontal: 12,
   },
   titleForm: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   descriptionForm: {
-    marginVertical: 10
+    marginVertical: 10,
   },
 });

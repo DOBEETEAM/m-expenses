@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {Image, KeyboardAvoidingView} from 'react-native';
 // @packages
 // @types
 import {SignInProps} from './sign-in.type';
@@ -13,13 +10,20 @@ import {appConfig} from '@app/app.config';
 import {useTheme} from '@shared/hooks';
 import {useSignIn, useSignInStyle} from './sign-in.hook';
 // @components
-import {Button, Container, ScreenWrapper, Typography} from '@components/base';
+import {
+  Button,
+  Container,
+  ScreenWrapper,
+  Typography,
+  ActivityIndicator,
+} from '@components/base';
 import {AuthForm} from '@components/auth-form';
 // @styles
 import {styles} from './sign-in.style';
 
 const _SignIn: React.FC<SignInProps> = ({navigation}) => {
   const {
+    isLoading,
     signInSchema,
     handleNavigateSignUp,
     handleSubmit,
@@ -31,6 +35,12 @@ const _SignIn: React.FC<SignInProps> = ({navigation}) => {
 
   return (
     <ScreenWrapper safeTopLayout style={containerStyle}>
+      {isLoading && (
+        <Container center flex noBackground style={styles.containerLoading}>
+          <ActivityIndicator size={'large'} />
+        </Container>
+      )}
+
       <KeyboardAvoidingView
         behavior={appConfig.device.isIOS ? 'padding' : 'height'}>
         <Container noBackground style={styles.logoContainer}>

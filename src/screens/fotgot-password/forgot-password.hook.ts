@@ -20,7 +20,7 @@ export function useForgotPasswordStyle() {
 
   const continueButtonStyle: ViewStyle = useMemo(() => {
     return {
-      borderRadius: theme.layout.borderRadiusSmall
+      borderRadius: theme.layout.borderRadiusLarge
     }
   }, [theme])
 

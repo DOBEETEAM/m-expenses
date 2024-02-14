@@ -94,7 +94,7 @@ const _AppIntro: React.FC<AppIntroProps> = ({navigation}) => {
         </Container>
       );
     },
-    [theme],
+    [containerSlidesStyle],
   );
 
   return (

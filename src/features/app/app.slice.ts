@@ -19,13 +19,13 @@ const appSlice = createSlice({
     setAppIntro(state, action: PayloadAction<boolean>) {
       state.isAppIntro = action.payload;
     },
-    setLoggedIn(state) {
-      state.isLoggedIn = true;
+    setLoggedIn(state, action: PayloadAction<boolean>) {
+      state.isLoggedIn = action.payload;
     },
   },
 });
 
-export const {setAppIntro} = appSlice.actions;
+export const {setAppIntro, setLoggedIn} = appSlice.actions;
 
 export const appSelector = (state: RootState) => state.app;
 

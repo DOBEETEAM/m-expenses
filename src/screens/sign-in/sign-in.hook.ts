@@ -7,7 +7,10 @@ import {ViewStyle} from '@data/models';
 import {UseSignInProps} from '@screens/sign-in';
 import {FormSchema} from '@components/auth-form';
 // @hooks
+import {useAppDispatch} from '@app/hooks';
 import {useTheme} from '@shared/hooks';
+// @others
+import {setLoggedIn} from '@features/app';
 
 export type FormValue = {
   email: string;
@@ -19,9 +22,23 @@ export function useSignIn({navigation}: UseSignInProps) {
     email: '',
     password: '',
   });
+  const dispatch = useAppDispatch();
+  const [isLoading, setLoading] = useState(false);
 
   const handleSignIn = useCallback(async (values: FormValue) => {
-    console.log(values);
+    setLoading(true);
+    try {
+      if (values.email === 'dong@gmail.com' && values.password === '123456') {
+        dispatch(setLoggedIn(true));
+        navigation?.replace('Launch');
+      }
+
+      console.log(values);
+    } catch (e) {
+      console.log('sign_in_error: ', e);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   const handleForgotPassword = useCallback(() => {
@@ -71,6 +88,7 @@ export function useSignIn({navigation}: UseSignInProps) {
   ];
 
   return {
+    isLoading,
     signInSchema,
     handleNavigateSignUp,
     handleForgotPassword,
