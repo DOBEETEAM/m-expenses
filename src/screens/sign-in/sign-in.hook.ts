@@ -54,7 +54,7 @@ export function useSignIn({navigation}: UseSignInProps) {
       Yup.object().shape({
         email: Yup.string()
           .required("Haven't entered your email yet")
-          .email('must be a valid email'),
+          .email('Must be a valid email'),
         password: Yup.string()
           .required("Haven't entered your password yet")
           .min(4),

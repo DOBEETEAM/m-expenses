@@ -5,3 +5,6 @@ export * from './sign-up';
 export * from './fotgot-password';
 
 export * from './home';
+export * from './transaction-history';
+export * from './budget';
+export * from './profile';

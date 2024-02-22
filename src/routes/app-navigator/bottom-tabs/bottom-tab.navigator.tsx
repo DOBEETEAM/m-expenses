@@ -1,6 +1,6 @@
 // @components
 import {TabItem, TabList} from './tab-list';
-import {Home} from '@screens';
+import {Budget, Home, Profile, TransactionHistory} from '@screens';
 
 const HomeTab: TabItem = {
   iconName: 'home-outline',
@@ -10,22 +10,30 @@ const HomeTab: TabItem = {
   component: Home as any,
 };
 
-// const BudgetTab: TabItem = {
-//   iconName: 'pie-chart-outline',
-//   selectedIconName: 'pie-chart',
-//   routeName: 'Budget',
-//   titleKey: 'budget',
-//   component: BudgetManagement as any,
-// };
+const TransactionTab: TabItem = {
+  iconName: 'swap-horizontal-outline',
+  selectedIconName: 'swap-horizontal',
+  routeName: 'Transaction',
+  titleKey: 'transaction',
+  component: TransactionHistory as any,
+};
 
-// const ProfileTab: TabItem = {
-//   iconName: 'person-outline',
-//   selectedIconName: 'person',
-//   routeName: 'Profile',
-//   titleKey: 'profile',
-//   component: Profile as any,
-// };
+const BudgetTab: TabItem = {
+  iconName: 'pie-chart-outline',
+  selectedIconName: 'pie-chart',
+  routeName: 'Budget',
+  titleKey: 'budget',
+  component: Budget as any,
+};
+
+const ProfileTab: TabItem = {
+  iconName: 'person-outline',
+  selectedIconName: 'person',
+  routeName: 'Profile',
+  titleKey: 'profile',
+  component: Profile as any,
+};
 
 export const BottomTabNavigator = () => {
-  return <TabList tabList={[HomeTab]} />;
+  return <TabList tabList={[HomeTab, TransactionTab, BudgetTab, ProfileTab]} />;
 };
