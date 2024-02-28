@@ -2,6 +2,7 @@ import React, {forwardRef} from 'react';
 import {View, Animated, StyleSheet} from 'react-native';
 // @packages
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Reanimated from 'react-native-reanimated';
 // @types
 import {ContainerProps} from './container.type';
 import {Ref} from '../base.type';
@@ -56,6 +57,7 @@ const _Container = forwardRef(
       style,
 
       animated,
+      reanimated,
       flex,
       row,
       center,
@@ -143,13 +145,10 @@ const _Container = forwardRef(
       return [styles, style];
     }, [styles, style]);
 
-    const Wrapper = React.useMemo(() => {
-      if (animated) {
-        return Animated.View;
-      }
-
-      return View;
-    }, [animated]);
+    const Wrapper: any = React.useMemo(
+      () => (reanimated ? Reanimated.View : animated ? Animated.View : View),
+      [reanimated, animated],
+    );
 
     return (
       <Wrapper {...props} ref={ref} style={componentStyles}>

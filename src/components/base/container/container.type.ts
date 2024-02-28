@@ -5,6 +5,7 @@ export interface ContainerProps extends ViewProps {
   children?: Children | Children[];
 
   animated?: boolean;
+  reanimated?: boolean;
 
   safeLayout?: boolean;
   safeTopLayout?: boolean;
