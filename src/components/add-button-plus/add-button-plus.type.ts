@@ -1,1 +1,4 @@
-export interface AddButtonPlusProps {}
+export interface AddButtonPlusProps {
+  opened: boolean;
+  toggleOpen: () => void;
+}
