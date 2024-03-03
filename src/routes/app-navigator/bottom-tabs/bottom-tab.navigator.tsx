@@ -18,6 +18,14 @@ const TransactionTab: TabItem = {
   component: TransactionHistory as any,
 };
 
+const AddButtonTab: TabItem = {
+  iconName: 'add',
+  routeName: 'Add',
+  titleKey: '',
+  component: Home as any,
+  type: "superButton"
+};
+
 const BudgetTab: TabItem = {
   iconName: 'pie-chart-outline',
   selectedIconName: 'pie-chart',
@@ -35,5 +43,5 @@ const ProfileTab: TabItem = {
 };
 
 export const BottomTabNavigator = () => {
-  return <TabList tabList={[HomeTab, TransactionTab, BudgetTab, ProfileTab]} />;
+  return <TabList tabList={[HomeTab, TransactionTab, AddButtonTab, BudgetTab, ProfileTab]} />;
 };

@@ -8,4 +8,5 @@ export type TabItem = {
   routeName: string;
   titleKey: string;
   component: React.ComponentType | React.FC;
+  type?: string;
 };

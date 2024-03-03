@@ -3,4 +3,5 @@ export type BottomTabParamsList = {
   Transaction: undefined;
   Budget: undefined;
   Profile: undefined;
+  Add: undefined
 };

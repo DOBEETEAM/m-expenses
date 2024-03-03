@@ -13,6 +13,8 @@ import {useTheme} from '@shared/hooks';
 import {BottomTabParamsList} from '@data/models';
 // @components
 import {BundleIconSetName, Icon} from '@components/base';
+import {CustomTab} from '../custom-tab';
+import {AddButtonPlus} from '@components';
 // @styles
 import {styles} from './tab-list.style';
 
@@ -57,6 +59,14 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
   const tabScreenOptions: (tabItem: TabItem) => BottomTabNavigationOptions =
     useCallback(
       (tabItem: TabItem) => {
+        if (tabItem.type === 'superButton') {
+          return {
+            headerShown: false,
+            title: '',
+            tabBarButton: (props) => <AddButtonPlus {...props} />,
+          };
+        }
+
         return {
           title: t(`appTab.${tabItem.titleKey}.title`),
           tabBarIcon: renderIcon(tabItem),
@@ -73,7 +83,9 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
     );
 
   return (
-    <BottomTabStack.Navigator screenOptions={screenOptions}>
+    <BottomTabStack.Navigator
+      screenOptions={screenOptions}
+      tabBar={(props) => <CustomTab {...props} />}>
       {tabList.map((item) => {
         return (
           <BottomTabStack.Screen
