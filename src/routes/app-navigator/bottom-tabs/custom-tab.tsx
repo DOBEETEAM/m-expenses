@@ -126,7 +126,11 @@ const _CustomTab = ({state, descriptors, navigation}: CustomTabProps) => {
           };
 
           if (options.tabBarButton) {
-            return options.tabBarButton({children: null});
+            return (
+              <React.Fragment key={index}>
+                {options.tabBarButton({children: null})}
+              </React.Fragment>
+            );
           } else {
             return (
               <TouchableOpacity

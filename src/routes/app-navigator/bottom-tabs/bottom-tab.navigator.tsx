@@ -23,7 +23,7 @@ const AddButtonTab: TabItem = {
   routeName: 'Add',
   titleKey: '',
   component: Home as any,
-  type: "superButton"
+  type: 'superButton',
 };
 
 const BudgetTab: TabItem = {
@@ -43,5 +43,9 @@ const ProfileTab: TabItem = {
 };
 
 export const BottomTabNavigator = () => {
-  return <TabList tabList={[HomeTab, TransactionTab, AddButtonTab, BudgetTab, ProfileTab]} />;
+  return (
+    <TabList
+      tabList={[HomeTab, TransactionTab, AddButtonTab, BudgetTab, ProfileTab]}
+    />
+  );
 };

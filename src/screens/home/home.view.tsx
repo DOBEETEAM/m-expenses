@@ -17,14 +17,16 @@ import {
   NavBar,
   ScrollView,
   Typography,
+  Container,
 } from '@components/base';
+import {IncomeExpenseCard} from '@components';
 // @styles
 import {styles} from './home.style';
 
 const _Home: React.FC<HomeProps> = () => {
   const {t} = useTranslation(['theme']);
   const {theme} = useTheme();
-  const {btnMonthStyle} = useHomeStyle();
+  const {btnMonthStyle, linearContainerStyle} = useHomeStyle();
 
   const renderAvatarUser = useCallback(() => {
     return (
@@ -63,11 +65,7 @@ const _Home: React.FC<HomeProps> = () => {
     <ScrollView useGestureHandler>
       <LinearGradient
         colors={['#FFF6E5', '#F8EDD8']}
-        style={{
-          flex: 0.5,
-          borderBottomLeftRadius: theme.layout.borderRadiusGigantic,
-          borderBottomRightRadius: theme.layout.borderRadiusGigantic,
-        }}>
+        style={[linearContainerStyle]}>
         <NavBar
           back={false}
           noBackground
@@ -75,6 +73,25 @@ const _Home: React.FC<HomeProps> = () => {
           renderTitle={renderFilterMonth}
           renderLeft={renderAvatarUser}
         />
+
+        <Container noBackground center>
+          <Typography type={TypographyType.LABEL_SEMI_MEDIUM_TERTIARY}>
+            Account Balance
+          </Typography>
+          <Typography
+            type={TypographyType.LABEL_GIGANTIC}
+            style={{fontWeight: 'bold', marginTop: 10, textAlign: 'center'}}>
+            20.000.000đ
+          </Typography>
+        </Container>
+
+        <Container
+          noBackground
+          row
+          style={{justifyContent: 'space-around', marginBottom: 25}}>
+          <IncomeExpenseCard type={'Income'} />
+          <IncomeExpenseCard type='Expense' />
+        </Container>
       </LinearGradient>
 
       <Typography>Theme: {t(`${theme.id}`)}</Typography>

@@ -21,5 +21,14 @@ export function useHomeStyle() {
     [theme],
   );
 
-  return {btnMonthStyle};
+  const linearContainerStyle = useMemo(
+    () => ({
+      // flex: 0.4,
+      borderBottomLeftRadius: theme.layout.borderRadiusGigantic,
+      borderBottomRightRadius: theme.layout.borderRadiusGigantic,
+    }),
+    [theme],
+  );
+
+  return {btnMonthStyle, linearContainerStyle};
 }
