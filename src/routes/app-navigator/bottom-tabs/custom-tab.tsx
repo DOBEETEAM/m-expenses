@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const _CustomTab = ({state, descriptors, navigation}: BottomTabBarProps) => {
+interface CustomTabProps extends BottomTabBarProps {}
+
+const _CustomTab = ({state, descriptors, navigation}: CustomTabProps) => {
   const {bottom} = useSafeAreaInsets();
   const {theme} = useTheme();
 
@@ -123,45 +125,46 @@ const _CustomTab = ({state, descriptors, navigation}: BottomTabBarProps) => {
             });
           };
 
-          return (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              key={index}
-              accessibilityRole="button"
-              accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              onLongPress={onLongPress}
-              style={styles.btnContainer}>
-              <>
-                {options.tabBarButton
-                  ? options.tabBarButton({children: null})
-                  : null}
-                {options?.tabBarIcon
-                  ? options.tabBarIcon({
-                      focused: isFocused,
-                      color: isFocused
-                        ? (theme.color.primaryHighlight as string)
-                        : (theme.color.textSecondary as string),
-                      size: 12,
-                    })
-                  : null}
-                {options.tabBarLabel !== undefined ? (
-                  options.tabBarLabel
-                ) : (
-                  <Text
-                    style={[
-                      labelInactiveStyle,
-                      styles.label,
-                      isFocused && labelActiveStyle,
-                    ]}>
-                    {label}
-                  </Text>
-                )}
-              </>
-            </TouchableOpacity>
-          );
+          if (options.tabBarButton) {
+            return options.tabBarButton({children: null});
+          } else {
+            return (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                key={index}
+                accessibilityRole="button"
+                accessibilityState={isFocused ? {selected: true} : {}}
+                accessibilityLabel={options.tabBarAccessibilityLabel}
+                testID={options.tabBarTestID}
+                onPress={onPress}
+                onLongPress={onLongPress}
+                style={styles.btnContainer}>
+                <>
+                  {options?.tabBarIcon
+                    ? options.tabBarIcon({
+                        focused: isFocused,
+                        color: isFocused
+                          ? (theme.color.primaryHighlight as string)
+                          : (theme.color.textSecondary as string),
+                        size: 12,
+                      })
+                    : null}
+                  {options.tabBarLabel !== undefined ? (
+                    options.tabBarLabel
+                  ) : (
+                    <Text
+                      style={[
+                        labelInactiveStyle,
+                        styles.label,
+                        isFocused && labelActiveStyle,
+                      ]}>
+                      {label}
+                    </Text>
+                  )}
+                </>
+              </TouchableOpacity>
+            );
+          }
         })}
       </View>
     </View>

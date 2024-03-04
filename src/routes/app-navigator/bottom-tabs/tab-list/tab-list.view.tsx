@@ -8,6 +8,7 @@ import {useTranslation} from 'react-i18next';
 // @types
 import {TabItem, TabListProps} from './tab-list.type';
 // @hooks
+import {useTabList} from './tab-list.hook';
 import {useTheme} from '@shared/hooks';
 // @navigation
 import {BottomTabParamsList} from '@data/models';
@@ -23,6 +24,7 @@ const BottomTabStack = createBottomTabNavigator<BottomTabParamsList>();
 const _TabList: React.FC<TabListProps> = ({tabList}) => {
   const {t} = useTranslation();
   const {theme} = useTheme();
+  const {opened, toggleOpened} = useTabList();
 
   const screenOptions: BottomTabNavigationOptions = useMemo(() => {
     return {
@@ -63,7 +65,13 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
           return {
             headerShown: false,
             title: '',
-            tabBarButton: (props) => <AddButtonPlus {...props} />,
+            tabBarButton: (props) => (
+              <AddButtonPlus
+                {...props}
+                opened={opened}
+                toggleOpen={toggleOpened}
+              />
+            ),
           };
         }
 
@@ -79,7 +87,7 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
           headerShown: false,
         };
       },
-      [renderIcon, theme, t],
+      [renderIcon, theme, t, opened, toggleOpened],
     );
 
   return (
@@ -93,6 +101,9 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
             name={item.routeName as keyof BottomTabParamsList}
             component={item.component}
             options={tabScreenOptions(item)}
+            listeners={{
+              tabPress: (e) => opened && e.preventDefault(),
+            }}
           />
         );
       })}

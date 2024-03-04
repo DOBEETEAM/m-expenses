@@ -1,8 +1,17 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 // @packages
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import {interpolate, useSharedValue} from 'react-native-reanimated';
+import {
+  Easing,
+  ReduceMotion,
+  cancelAnimation,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 // @types
 import {AddButtonPlusProps} from './add-button-plus.type';
 // @hooks
@@ -11,25 +20,57 @@ import {useTheme} from '@shared/hooks';
 import {Colors} from '@resources/values';
 // @components
 import {Container, Icon} from '@components/base';
-import FastImage from 'react-native-fast-image';
 // @images
 import CurrencyExchangeSvg from '@assets/icons/currency-exchange.svg';
 import IncomeSvg from '@assets/icons/income.svg';
 import ExpenseSvg from '@assets/icons/expense.svg';
 
-const _AddButtonPlus: React.FC<AddButtonPlusProps> = () => {
+const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
   const {theme} = useTheme();
-  const valueRotate = useSharedValue('45deg');
+  const valueRotate = useSharedValue('0deg');
+  const actionsOffset = useSharedValue(0);
+  const opacityAction = useSharedValue(0);
+
+  useEffect(() => {
+    valueRotate.value = withTiming(opened ? '45deg' : '0deg', {
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+      reduceMotion: ReduceMotion.System,
+    });
+
+    withSequence(
+      (actionsOffset.value = withTiming(opened ? 0 : 1, {
+        duration: 300,
+        easing: Easing.inOut(Easing.linear),
+      })),
+      (opacityAction.value = withTiming(opened ? 1 : 0, {
+        duration: 300,
+        easing: Easing.linear,
+      })),
+    );
+
+    return () => {
+      cancelAnimation(valueRotate);
+      cancelAnimation(actionsOffset);
+      cancelAnimation(opacityAction);
+    };
+  }, [opened, valueRotate, actionsOffset, opacityAction]);
+
+  const actionOpacityAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: opacityAction.value,
+  }));
+
+  const addButtonInnerAnimatedStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        rotate: valueRotate.value,
+      },
+    ],
+  }));
 
   const addButtonInnerStyle = useMemo(
     () => ({
       backgroundColor: theme.color.primaryHighlight,
-      transform: [
-        {
-          // rotate: interpolate(0, [0, 1], ["0deg", "45deg"]),
-          rotate: '45deg',
-        },
-      ],
     }),
     [theme],
   );
@@ -51,14 +92,23 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = () => {
             reanimated
             style={[
               styles.item,
+              actionOpacityAnimatedStyle,
               {
                 backgroundColor: Colors.INCOME,
                 transform: [
                   {
-                    translateX: -60,
+                    translateX: interpolate(
+                      actionsOffset.value,
+                      [0, 1],
+                      [0, -60],
+                    ),
                   },
                   {
-                    translateY: -50,
+                    translateY: interpolate(
+                      actionsOffset.value,
+                      [0, 1],
+                      [0, -50],
+                    ),
                   },
                 ],
               },
@@ -72,11 +122,16 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = () => {
             reanimated
             style={[
               styles.item,
+              actionOpacityAnimatedStyle,
               {
                 backgroundColor: Colors.TRANSFER,
                 transform: [
                   {
-                    translateY: -100,
+                    translateY: interpolate(
+                      actionsOffset.value,
+                      [0, 1],
+                      [0, -100],
+                    ),
                   },
                 ],
               },
@@ -90,14 +145,23 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = () => {
             reanimated
             style={[
               styles.item,
+              actionOpacityAnimatedStyle,
               {
                 backgroundColor: Colors.EXPENSE,
                 transform: [
                   {
-                    translateX: 60,
+                    translateX: interpolate(
+                      actionsOffset.value,
+                      [0, 1],
+                      [0, 60],
+                    ),
                   },
                   {
-                    translateY: -50,
+                    translateY: interpolate(
+                      actionsOffset.value,
+                      [0, 1],
+                      [0, -50],
+                    ),
                   },
                 ],
               },
@@ -106,12 +170,14 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = () => {
           </Container>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback
-          onPress={() => console.log('click')}
-          style={addButtonStyle}>
+        <TouchableWithoutFeedback onPress={toggleOpen} style={addButtonStyle}>
           <Container
             reanimated
-            style={[styles.addButtonInner, addButtonInnerStyle]}>
+            style={[
+              styles.addButtonInner,
+              addButtonInnerStyle,
+              addButtonInnerAnimatedStyle,
+            ]}>
             <Icon name="add" style={styles.itemIcon} />
           </Container>
         </TouchableWithoutFeedback>
@@ -158,10 +224,6 @@ const styles = StyleSheet.create({
   itemIcon: {
     fontSize: 35,
     color: Colors.WHITE,
-  },
-  itemImage: {
-    width: 32,
-    height: 32,
   },
 });
 
