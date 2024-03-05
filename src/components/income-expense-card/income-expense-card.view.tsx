@@ -27,9 +27,10 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
 
   const iconCardStyle = useMemo(
     () => ({
-      borderRadius: theme.layout.borderRadiusHuge,
+      borderRadius: theme.layout.borderRadiusLarge,
       padding: 6,
       marginRight: 10,
+      height: 48
     }),
     [theme],
   );
@@ -67,7 +68,7 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
               Expense
             </Typography>
             <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
-              340.000.000đ
+              340.000đ
             </Typography>
           </>
         )}

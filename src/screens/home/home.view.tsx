@@ -90,11 +90,56 @@ const _Home: React.FC<HomeProps> = () => {
           row
           style={{justifyContent: 'space-around', marginBottom: 25}}>
           <IncomeExpenseCard type={'Income'} />
-          <IncomeExpenseCard type='Expense' />
+          <IncomeExpenseCard type="Expense" />
         </Container>
       </LinearGradient>
 
-      <Typography>Theme: {t(`${theme.id}`)}</Typography>
+      <Container
+        flex
+        noBackground
+        style={{marginHorizontal: 10, marginTop: 10}}>
+        <Container
+          noBackground
+          flex
+          row
+          style={{justifyContent: 'space-between', height: 56}}>
+          <Typography type={TypographyType.TITLE_LARGE}>
+            Spend Frequency
+          </Typography>
+          <Button
+            style={{
+              backgroundColor: theme.color.background,
+              paddingVertical: 5,
+              paddingHorizontal: 16,
+              height: 32,
+              borderRadius: theme.layout.borderRadiusHuge,
+            }}
+            title="See All"
+            typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
+          />
+        </Container>
+
+        <Container
+          noBackground
+          flex
+          row
+          style={{justifyContent: 'space-between', height: 56}}>
+          <Typography type={TypographyType.TITLE_LARGE}>
+            Recent Transaction
+          </Typography>
+          <Button
+            style={{
+              backgroundColor: theme.color.background,
+              paddingVertical: 5,
+              paddingHorizontal: 16,
+              height: 32,
+              borderRadius: theme.layout.borderRadiusHuge,
+            }}
+            title="See All"
+            typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
+          />
+        </Container>
+      </Container>
     </ScrollView>
   );
 };
