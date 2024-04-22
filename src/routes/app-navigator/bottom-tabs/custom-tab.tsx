@@ -56,10 +56,10 @@ const _CustomTab = ({state, descriptors, navigation}: CustomTabProps) => {
   const wrapperStyle = useMemo(() => {
     return [
       {
-        backgroundColor: theme.color.background,
+        backgroundColor: Colors.TRANSPARENT,
       },
     ];
-  }, [theme]);
+  }, []);
 
   const containerStyle = useMemo(() => {
     return [

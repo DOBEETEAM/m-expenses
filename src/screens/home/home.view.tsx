@@ -19,7 +19,7 @@ import {
   Typography,
   Container,
 } from '@components/base';
-import {IncomeExpenseCard} from '@components';
+import {IncomeExpenseCard, TransactionItem} from '@components';
 // @styles
 import {styles} from './home.style';
 
@@ -62,9 +62,9 @@ const _Home: React.FC<HomeProps> = () => {
   }, [theme]);
 
   return (
-    <ScrollView useGestureHandler>
+    <ScrollView useGestureHandler safeLayout contentContainerStyle={{paddingBottom: 15}} >
       <LinearGradient
-        colors={['#FFF6E5', '#F8EDD8']}
+        colors={['#F8EDD8', '#FFF6E5']}
         style={[linearContainerStyle]}>
         <NavBar
           back={false}
@@ -119,25 +119,29 @@ const _Home: React.FC<HomeProps> = () => {
           />
         </Container>
 
-        <Container
-          noBackground
-          flex
-          row
-          style={{justifyContent: 'space-between', height: 56}}>
-          <Typography type={TypographyType.TITLE_LARGE}>
-            Recent Transaction
-          </Typography>
-          <Button
-            style={{
-              backgroundColor: theme.color.background,
-              paddingVertical: 5,
-              paddingHorizontal: 16,
-              height: 32,
-              borderRadius: theme.layout.borderRadiusHuge,
-            }}
-            title="See All"
-            typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
-          />
+        <Container noBackground>
+          <Container
+            noBackground
+            flex
+            row
+            style={{justifyContent: 'space-between', height: 56}}>
+            <Typography type={TypographyType.TITLE_LARGE}>
+              Recent Transaction
+            </Typography>
+            <Button
+              style={{
+                backgroundColor: theme.color.background,
+                paddingVertical: 5,
+                paddingHorizontal: 16,
+                height: 32,
+                borderRadius: theme.layout.borderRadiusHuge,
+              }}
+              title="See All"
+              typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
+            />
+          </Container>
+
+          <TransactionItem />
         </Container>
       </Container>
     </ScrollView>

@@ -5,7 +5,6 @@ import {ApiRequestor} from '@data/models/base';
 
 /**
  * This is base handler for API execution. 
- * It's designed by REST API and some http method: GET/POST/PUT/PATCH/DELETE
  * @author Đông Ngô <dongnbas@gmail.com>
  */
 class _BaseApiHandler {

@@ -8,6 +8,7 @@ export interface ScrollViewProps extends RNScrollViewProps {
   reanimated?: boolean;
   animated?: boolean;
   useGestureHandler?: boolean;
+  noBackground?: boolean;
 
   children?: Children;
 }

@@ -7,6 +7,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @types
 import {ScrollViewProps} from './scroll-view.type';
 import {Ref} from '../base.type';
+// @hooks
+import { useTheme } from '@shared/hooks';
 
 const createStyles = () => {
   return StyleSheet.create({
@@ -24,10 +26,12 @@ const _ScrollView = forwardRef(
       useGestureHandler,
       contentContainerStyle,
       children,
+      noBackground,
       ...props
     }: ScrollViewProps,
     ref: Ref,
   ) => {
+    const {theme} = useTheme()
     const {top, bottom} = useSafeAreaInsets();
 
     const contentContainerStyles = useMemo(() => {
@@ -37,9 +41,10 @@ const _ScrollView = forwardRef(
         baseStyles.contentContainer,
         safeLayout && {paddingBottom: bottom},
         safeTopLayout && {paddingTop: top},
+        noBackground ? {} : {backgroundColor: theme.color.surface},
         contentContainerStyle,
       ];
-    }, [bottom, top, safeLayout, safeTopLayout, contentContainerStyle]);
+    }, [bottom, top, safeLayout, safeTopLayout, noBackground, contentContainerStyle]);
 
     const Wrapper: React.ElementType = useMemo(
       () =>

@@ -59,7 +59,7 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
               Income
             </Typography>
             <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
-              340.000.000đ
+              340.000đ
             </Typography>
           </>
         ) : (
