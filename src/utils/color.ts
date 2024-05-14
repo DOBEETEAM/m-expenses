@@ -17,6 +17,10 @@ export const hexToRgbCode = (hex: string) => {
   throw new Error("Bad Hex");
 };
 
+export const convertToRGB = (hex: string) => {
+  return `rgb(${hexToRgbCode(hex).join(",")})`
+}
+
 export const rgbaToRgbCode = (rgba: string, background = "#ffffff") => {
   const [bgRed, bgGreen, bgBlue] = hexToRgbCode(background);
   const [inputRed, inputGreen, inputBlue, inputAlpha] = rgba

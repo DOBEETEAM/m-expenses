@@ -5,11 +5,13 @@ import {RootState} from '@app';
 interface InitialState {
   isAppIntro: boolean;
   isLoggedIn: boolean;
+  isOpenAddTransaction: boolean;
 }
 
 const initialState: InitialState = {
   isAppIntro: true,
   isLoggedIn: false,
+  isOpenAddTransaction: false,
 };
 
 const appSlice = createSlice({
@@ -22,10 +24,14 @@ const appSlice = createSlice({
     setLoggedIn(state, action: PayloadAction<boolean>) {
       state.isLoggedIn = action.payload;
     },
+    toggleModalAddTransaction: (state) => {
+      state.isOpenAddTransaction = !state.isOpenAddTransaction;
+    },
   },
 });
 
-export const {setAppIntro, setLoggedIn} = appSlice.actions;
+export const {setAppIntro, setLoggedIn, toggleModalAddTransaction} =
+  appSlice.actions;
 
 export const appSelector = (state: RootState) => state.app;
 

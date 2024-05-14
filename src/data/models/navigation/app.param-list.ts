@@ -5,4 +5,7 @@ export type AppStackParamList = {
   SignUp: undefined;
   ForgotPassword: undefined;
   BottomTab: undefined;
+  CreateTransaction: {
+    transactionCategory: 'Income' | 'Expense' | 'Transfer';
+  };
 };
