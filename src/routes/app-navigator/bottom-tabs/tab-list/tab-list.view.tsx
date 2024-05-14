@@ -10,6 +10,7 @@ import {TabItem, TabListProps} from './tab-list.type';
 // @hooks
 import {useTabList} from './tab-list.hook';
 import {useTheme} from '@shared/hooks';
+import {useAppDispatch, useAppSelector} from '@app/hooks';
 // @navigation
 import {BottomTabParamsList} from '@data/models';
 // @components
@@ -18,13 +19,15 @@ import {CustomTab} from '../custom-tab';
 import {AddButtonPlus} from '@components';
 // @styles
 import {styles} from './tab-list.style';
+import {appSelector, toggleModalAddTransaction} from '@features/app';
 
 const BottomTabStack = createBottomTabNavigator<BottomTabParamsList>();
 
 const _TabList: React.FC<TabListProps> = ({tabList}) => {
+  const dispatch = useAppDispatch();
   const {t} = useTranslation();
   const {theme} = useTheme();
-  const {opened, toggleOpened} = useTabList();
+  const {isOpenAddTransaction} = useAppSelector(appSelector);
 
   const screenOptions: BottomTabNavigationOptions = useMemo(() => {
     return {
@@ -66,11 +69,7 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
             headerShown: false,
             title: '',
             tabBarButton: (props) => (
-              <AddButtonPlus
-                {...props}
-                opened={opened}
-                toggleOpen={toggleOpened}
-              />
+              <AddButtonPlus {...props} opened={isOpenAddTransaction} />
             ),
           };
         }
@@ -87,7 +86,7 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
           headerShown: false,
         };
       },
-      [renderIcon, theme, t, opened, toggleOpened],
+      [renderIcon, theme, t, isOpenAddTransaction],
     );
 
   return (
@@ -102,7 +101,8 @@ const _TabList: React.FC<TabListProps> = ({tabList}) => {
             component={item.component}
             options={tabScreenOptions(item)}
             listeners={{
-              tabPress: (e) => opened && e.preventDefault(),
+              tabPress: (e) =>
+                isOpenAddTransaction && dispatch(toggleModalAddTransaction()),
             }}
           />
         );

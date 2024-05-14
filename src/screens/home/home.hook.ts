@@ -1,12 +1,25 @@
 // @types
-import {useMemo} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {UseHomeProps} from './home.type';
 // @hooks
 import {useTheme} from '@shared/hooks';
+// @utils
+import { hexToRgba } from '@utils/color';
 // @styles
 import {styles} from './home.style';
 
-export function useHome(props: UseHomeProps) {}
+export function useHome() {
+  const [isRefreshing, setRefreshing] = useState(false)
+
+  const handleRefreshing = useCallback(() => {
+    setRefreshing(true)
+  }, [])
+
+  return {
+    isRefreshing,
+    handleRefreshing
+  }
+}
 
 export function useHomeStyle() {
   const {theme} = useTheme();

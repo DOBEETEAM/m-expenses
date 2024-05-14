@@ -8,7 +8,7 @@ import {HomeProps} from './home.type';
 import {TypographyType} from '@resources/theme';
 // @hooks
 import {useTheme} from '@shared/hooks';
-import {useHomeStyle} from './home.hook';
+import {useHome, useHomeStyle} from './home.hook';
 // @components
 import {
   BundleIconSetName,
@@ -18,14 +18,18 @@ import {
   ScrollView,
   Typography,
   Container,
+  IconButton,
+  ActivityIndicator,
 } from '@components/base';
-import {IncomeExpenseCard, TransactionItem} from '@components';
+import {HomeSection, IncomeExpenseCard, TransactionItem} from '@components';
 // @styles
 import {styles} from './home.style';
+import {formatCurrency} from '@utils';
 
 const _Home: React.FC<HomeProps> = () => {
   const {t} = useTranslation(['theme']);
   const {theme} = useTheme();
+  const {isRefreshing} = useHome()
   const {btnMonthStyle, linearContainerStyle} = useHomeStyle();
 
   const renderAvatarUser = useCallback(() => {
@@ -53,19 +57,17 @@ const _Home: React.FC<HomeProps> = () => {
 
   const renderIconNotification = useCallback(() => {
     return (
-      <Icon
+      <IconButton
         bundle={BundleIconSetName.MATERIAL_COMMUNITY_ICONS}
         name="bell"
-        style={[styles.iconNotify, {color: theme.color.primary}]}
+        iconStyle={[styles.iconNotify, {color: theme.color.primary}]}
       />
     );
   }, [theme]);
 
   return (
-    <ScrollView useGestureHandler safeLayout contentContainerStyle={{paddingBottom: 15}} >
-      <LinearGradient
-        colors={['#F8EDD8', '#FFF6E5']}
-        style={[linearContainerStyle]}>
+    <>
+      <LinearGradient colors={['#F8EDD8', '#FFF6E5']}>
         <NavBar
           back={false}
           noBackground
@@ -73,78 +75,60 @@ const _Home: React.FC<HomeProps> = () => {
           renderTitle={renderFilterMonth}
           renderLeft={renderAvatarUser}
         />
-
-        <Container noBackground center>
-          <Typography type={TypographyType.LABEL_SEMI_MEDIUM_TERTIARY}>
-            Account Balance
-          </Typography>
-          <Typography
-            type={TypographyType.LABEL_GIGANTIC}
-            style={{fontWeight: 'bold', marginTop: 10, textAlign: 'center'}}>
-            20.000.000đ
-          </Typography>
-        </Container>
-
-        <Container
-          noBackground
-          row
-          style={{justifyContent: 'space-around', marginBottom: 25}}>
-          <IncomeExpenseCard type={'Income'} />
-          <IncomeExpenseCard type="Expense" />
-        </Container>
       </LinearGradient>
 
-      <Container
-        flex
-        noBackground
-        style={{marginHorizontal: 10, marginTop: 10}}>
-        <Container
-          noBackground
-          flex
-          row
-          style={{justifyContent: 'space-between', height: 56}}>
-          <Typography type={TypographyType.TITLE_LARGE}>
-            Spend Frequency
-          </Typography>
-          <Button
-            style={{
-              backgroundColor: theme.color.background,
-              paddingVertical: 5,
-              paddingHorizontal: 16,
-              height: 32,
-              borderRadius: theme.layout.borderRadiusHuge,
-            }}
-            title="See All"
-            typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
-          />
-        </Container>
-
-        <Container noBackground>
-          <Container
-            noBackground
-            flex
-            row
-            style={{justifyContent: 'space-between', height: 56}}>
-            <Typography type={TypographyType.TITLE_LARGE}>
-              Recent Transaction
+      <ScrollView
+        useGestureHandler
+        safeLayout
+        contentContainerStyle={{paddingBottom: 15}}>
+        <LinearGradient
+          colors={['#FFF6E5', '#FFF6E5']}
+          style={[linearContainerStyle]}>
+          <Container noBackground center>
+            <Typography type={TypographyType.LABEL_SEMI_MEDIUM_TERTIARY}>
+              Account Balance
             </Typography>
-            <Button
-              style={{
-                backgroundColor: theme.color.background,
-                paddingVertical: 5,
-                paddingHorizontal: 16,
-                height: 32,
-                borderRadius: theme.layout.borderRadiusHuge,
-              }}
-              title="See All"
-              typoProps={{type: TypographyType.LABEL_SEMI_LARGE_PRIMARY}}
-            />
+
+            <Typography
+              type={TypographyType.LABEL_GIGANTIC}
+              style={{fontWeight: 'bold', marginTop: 10, textAlign: 'center'}}>
+              {formatCurrency(Number('20000000'))}
+            </Typography>
           </Container>
 
-          <TransactionItem />
+          <Container
+            noBackground
+            row
+            style={{justifyContent: 'space-around', marginBottom: 23}}>
+            <IncomeExpenseCard type={'Income'} />
+
+            <IncomeExpenseCard type="Expense" />
+          </Container>
+        </LinearGradient>
+
+        <Container noBackground style={{marginHorizontal: 10}}>
+          <HomeSection title="Spend sequency" />
+
+          <HomeSection title="Recently Transaction">
+            <TransactionItem
+              title="Shopping"
+              description="Buy some groceries and milk, bread, noodles"
+              amount={formatCurrency(Number('5000'))}
+              timeTransaction="12:34"
+              type="Expense"
+            />
+
+            <TransactionItem
+              title="Have give"
+              description="someone has gave"
+              amount={formatCurrency(Number('18000000'))}
+              timeTransaction="12:34"
+              type="Income"
+            />
+          </HomeSection>
         </Container>
-      </Container>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 

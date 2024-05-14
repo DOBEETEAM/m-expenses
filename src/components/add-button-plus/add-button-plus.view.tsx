@@ -1,6 +1,7 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 // @packages
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {
   Easing,
@@ -13,8 +14,10 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 // @types
+import {AppStackParamList} from '@data/models';
 import {AddButtonPlusProps} from './add-button-plus.type';
 // @hooks
+import {useAppDispatch} from '@app/hooks';
 import {useTheme} from '@shared/hooks';
 // @constants
 import {Colors} from '@resources/values';
@@ -24,12 +27,39 @@ import {Container, Icon} from '@components/base';
 import CurrencyExchangeSvg from '@assets/icons/currency-exchange.svg';
 import IncomeSvg from '@assets/icons/income.svg';
 import ExpenseSvg from '@assets/icons/expense.svg';
+import {toggleModalAddTransaction} from '@features/app';
 
-const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
+const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened}) => {
+  const dispatch = useAppDispatch();
+  const {navigate} = useNavigation<NavigationProp<AppStackParamList>>();
   const {theme} = useTheme();
+
   const valueRotate = useSharedValue('0deg');
   const actionsOffset = useSharedValue(0);
   const opacityAction = useSharedValue(0);
+
+  const handleCreateTransaction = useCallback(
+    (type: string) => {
+      switch (type) {
+        case 'Expense':
+          navigate('CreateTransaction', {
+            transactionCategory: 'Expense',
+          });
+          break;
+        case 'Income':
+          navigate('CreateTransaction', {
+            transactionCategory: 'Income',
+          });
+          break;
+        case 'Transfer':
+          navigate('CreateTransaction', {
+            transactionCategory: 'Transfer',
+          });
+          break;
+      }
+    },
+    [navigate],
+  );
 
   useEffect(() => {
     valueRotate.value = withTiming(opened ? '45deg' : '0deg', {
@@ -87,7 +117,9 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
   return (
     <Container flex style={styles.container}>
       <Container noBackground style={styles.box}>
-        <TouchableWithoutFeedback style={addButtonStyle}>
+        <TouchableWithoutFeedback
+          style={addButtonStyle}
+          onPress={() => handleCreateTransaction('Income')}>
           <Container
             reanimated
             style={[
@@ -117,7 +149,8 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
           </Container>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => handleCreateTransaction('Transfer')}>
           <Container
             reanimated
             style={[
@@ -140,7 +173,8 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
           </Container>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() => handleCreateTransaction('Expense')}>
           <Container
             reanimated
             style={[
@@ -170,7 +204,9 @@ const _AddButtonPlus: React.FC<AddButtonPlusProps> = ({opened, toggleOpen}) => {
           </Container>
         </TouchableWithoutFeedback>
 
-        <TouchableWithoutFeedback onPress={toggleOpen} style={addButtonStyle}>
+        <TouchableWithoutFeedback
+          onPress={() => dispatch(toggleModalAddTransaction())}
+          style={addButtonStyle}>
           <Container
             reanimated
             style={[

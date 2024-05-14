@@ -13,6 +13,7 @@ import {styles} from './income-expense-card.style';
 import IncomeSvg from '@assets/icons/income.svg';
 import ExpenseSvg from '@assets/icons/expense.svg';
 import {useTheme} from '@shared/hooks';
+import { formatCurrency } from '@utils';
 
 const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
   const {theme} = useTheme();
@@ -55,20 +56,20 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
       <Container noBackground flex>
         {type === 'Income' ? (
           <>
-            <Typography type={TypographyType.LABEL_MEDIUM} style={[labelStyle]}>
+            <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
               Income
             </Typography>
-            <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
-              340.000đ
+            <Typography type={TypographyType.LABEL_SEMI_HUGE} style={[labelStyle, styles.totalMoneyCard]}>
+              {formatCurrency(Number('340000'))}
             </Typography>
           </>
         ) : (
           <>
-            <Typography type={TypographyType.LABEL_MEDIUM} style={[labelStyle]}>
+            <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
               Expense
             </Typography>
-            <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
-              340.000đ
+            <Typography type={TypographyType.LABEL_SEMI_HUGE} style={[labelStyle, styles.totalMoneyCard]}>
+              {formatCurrency(Number('560000'))}
             </Typography>
           </>
         )}

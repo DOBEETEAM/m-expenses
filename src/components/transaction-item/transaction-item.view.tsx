@@ -1,5 +1,4 @@
-import React from 'react';
-import {Text, View} from 'react-native';
+import React, {useMemo} from 'react';
 import {TransactionItemProps} from './transaction-item.type';
 // @hooks
 import {useTheme} from '@shared/hooks';
@@ -14,49 +13,60 @@ import {
 // @styles
 import {styles} from './transaction-item.style';
 import {TypographyType} from '@resources/theme';
+import {summarizedText} from '@utils';
+import {Colors} from '@resources';
 
-const _TransactionItem: React.FC<TransactionItemProps> = () => {
+const _TransactionItem: React.FC<TransactionItemProps> = ({
+  title,
+  description,
+  amount,
+  timeTransaction,
+  type,
+}) => {
   const {theme} = useTheme();
 
   return (
-    <Button
-      style={{
-        marginHorizontal: 10,
-        marginBottom: 8,
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
+    <Button style={styles.container}>
       <Container
-        style={{
-          backgroundColor: theme.color.background,
-          padding: 10,
-          borderRadius: theme.layout.borderRadiusLarge,
-        }}>
+        style={[
+          styles.iconContainer,
+          {
+            backgroundColor: theme.color.primary5,
+            borderRadius: theme.layout.borderRadiusLarge,
+          },
+        ]}>
         <Icon
           bundle={BundleIconSetName.IONICONS}
           name="cart"
-          style={{fontSize: 25, color: theme.color.primary}}
+          style={[styles.icon, {color: theme.color.primary}]}
         />
       </Container>
 
-      <Container flex style={{marginLeft: 10}}>
-        <Typography type={TypographyType.LABEL_LARGE} style={{marginBottom: 5}}>
-          Shopping
+      <Container flex style={styles.contentContainer}>
+        <Typography type={TypographyType.LABEL_LARGE} style={styles.titleText}>
+          {title}
         </Typography>
-        <Typography type={TypographyType.DESCRIPTION_MEDIUM_TERTIARY}>
-          Buy some grocery
+
+        <Typography type={TypographyType.DESCRIPTION_SMALL_TERTIARY}>
+          {description && summarizedText(description || '', 35)}
         </Typography>
       </Container>
 
-      <Container>
+      <Container noBackground>
         <Typography
           type={TypographyType.LABEL_LARGE}
-          style={{marginBottom: 5, alignSelf: 'flex-end'}}>
-          {' '}
-          -50K
+          style={[
+            styles.amountText,
+            {
+              color: type === 'Income' ? Colors.INCOME : Colors.EXPENSE,
+              fontWeight: '600',
+            },
+          ]}>
+          {(type === 'Income' ? '+' : '-') + ' ' + amount}
         </Typography>
-        <Typography type={TypographyType.DESCRIPTION_MEDIUM_TERTIARY}>
-          10:00 AM
+
+        <Typography type={TypographyType.DESCRIPTION_MEDIUM_TERTIARY} style={{alignSelf: 'flex-end'}}>
+          {timeTransaction}
         </Typography>
       </Container>
     </Button>
