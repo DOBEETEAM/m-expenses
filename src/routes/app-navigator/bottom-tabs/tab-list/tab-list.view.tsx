@@ -8,7 +8,6 @@ import {useTranslation} from 'react-i18next';
 // @types
 import {TabItem, TabListProps} from './tab-list.type';
 // @hooks
-import {useTabList} from './tab-list.hook';
 import {useTheme} from '@shared/hooks';
 import {useAppDispatch, useAppSelector} from '@app/hooks';
 // @navigation

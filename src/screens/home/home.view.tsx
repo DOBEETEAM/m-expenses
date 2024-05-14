@@ -92,7 +92,7 @@ const _Home: React.FC<HomeProps> = () => {
             <Typography
               type={TypographyType.LABEL_GIGANTIC}
               style={{fontWeight: 'bold', marginTop: 10, textAlign: 'center'}}>
-              {formatCurrency(Number('20000000'))}
+              {formatCurrency(Number('18783000'))}
             </Typography>
           </Container>
 
@@ -107,21 +107,19 @@ const _Home: React.FC<HomeProps> = () => {
         </LinearGradient>
 
         <Container noBackground style={{marginHorizontal: 10}}>
-          <HomeSection title="Spend sequency" />
-
           <HomeSection title="Recently Transaction">
             <TransactionItem
               title="Shopping"
               description="Buy some groceries and milk, bread, noodles"
-              amount={formatCurrency(Number('5000'))}
+              amount={formatCurrency(Number('6500'))}
               timeTransaction="12:34"
               type="Expense"
             />
 
             <TransactionItem
-              title="Have give"
+              title="Have receive"
               description="someone has gave"
-              amount={formatCurrency(Number('18000000'))}
+              amount={formatCurrency(Number('18020000'))}
               timeTransaction="12:34"
               type="Income"
             />

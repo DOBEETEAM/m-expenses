@@ -13,11 +13,11 @@ export const summarizedText = (str: string, maxLength: number) => {
 
 export function formatCurrency(num: number) {
   if (num >= 1e9) {
-    return parseFloat((num / 1e9).toFixed(1)) + 'B'; // Chia cho 1 tỷ và thêm 'B'
+    return (num / 1e9) + 'B'; // Chia cho 1 tỷ và thêm 'B'
   } else if (num >= 1e6) {
-    return parseFloat((num / 1e6).toFixed(1)) + 'M'; // Chia cho 1 triệu và thêm 'M'
+    return (num / 1e6) + 'M'; // Chia cho 1 triệu và thêm 'M'
   } else if (num >= 1e3) {
-    return parseFloat((num / 1e3).toFixed(1)) + 'K'; // Chia cho 1 nghìn và thêm 'K'
+    return (num / 1e3) + 'K'; // Chia cho 1 nghìn và thêm 'K'
   } else {
     return num.toString(); // Trả về số nếu nhỏ hơn 1 nghìn
   }

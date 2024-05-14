@@ -1,10 +1,8 @@
-// @types
 import {useCallback, useMemo, useState} from 'react';
+// @types
 import {UseHomeProps} from './home.type';
 // @hooks
 import {useTheme} from '@shared/hooks';
-// @utils
-import { hexToRgba } from '@utils/color';
 // @styles
 import {styles} from './home.style';
 
@@ -36,7 +34,6 @@ export function useHomeStyle() {
 
   const linearContainerStyle = useMemo(
     () => ({
-      // flex: 0.4,
       borderBottomLeftRadius: theme.layout.borderRadiusGigantic,
       borderBottomRightRadius: theme.layout.borderRadiusGigantic,
     }),
