@@ -38,6 +38,7 @@ const _Button = forwardRef(
 
       renderTitleComponent,
       renderContentContainerComponent,
+      renderIconLeft,
 
       ...props
     }: BaseButtonProps,
@@ -63,8 +64,8 @@ const _Button = forwardRef(
       const ContentContainer = useContentContainer ? View : Fragment;
       return (
         <ContentContainer>
-          {/* {iconLeft}
-          {!!renderIconLeft && renderIconLeft(titleStyles, {}, fontStyle)} */}
+          {/* {iconLeft} */}
+          {!!renderIconLeft && renderIconLeft(titleStyles, {}, {})}
 
           {renderTitleComponent ? (
             renderTitleComponent(titleStyles, {})

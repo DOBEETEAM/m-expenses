@@ -32,6 +32,11 @@ export interface BaseButtonProps
    * return children for contentContainer customization  as you want.
    */
   renderContentContainerComponent?: (children: Children) => ReactElement;
+  renderIconLeft?: (
+    titleStyle: StyleProp<TextStyle>,
+    buttonStyle?: StyleProp<ViewStyle>,
+    fontStyle?: StyleProp<TextStyle>,
+  ) => ReactElement;
 
   children?: Children;
 }
