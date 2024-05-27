@@ -1,16 +1,42 @@
 import React from 'react';
-import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
+import {Keyboard, View, TouchableWithoutFeedback, Switch} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 // @types
 import {CreateTransactionProps} from './create-transaction.type';
-
-import {useCreateTransactionStyle} from './create-transaction.hook';
+// @hooks
+import {
+  useCreateTransaction,
+  useCreateTransactionStyle,
+} from './create-transaction.hook';
 // @components
-import {AppInput, Container, NavBar, Typography} from '@components/base';
+import {
+  AppInput,
+  BundleIconSetName,
+  Button,
+  ButtonRoundedType,
+  Container,
+  FilledButton,
+  Icon,
+  NavBar,
+  Typography,
+} from '@components/base';
 // @styles
 import {styles} from './create-transaction.style';
 import {TypographyType} from '@resources/theme';
 import {useTheme} from '@shared/hooks';
+
+const EXPENSE_DATA = [
+  {label: 'Shopping', value: 'shopping'},
+  {label: 'Cafe', value: 'cafe'},
+  {label: 'Fuel & travel', value: 'fuel,travel'},
+  {label: 'Market', value: 'market'},
+];
+
+const WALLET_DATA = [
+  {label: 'Cash', value: 'cash'},
+  {label: 'Bank', value: 'bank'},
+  {label: 'E-wallet', value: 'ewallet'},
+];
 
 const _CreateTransaction: React.FC<CreateTransactionProps> = ({
   navigation,
@@ -18,7 +44,18 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
 }) => {
   const {theme} = useTheme();
   const {transactionCategory} = route.params;
-  const {navBarStyle} = useCreateTransactionStyle({transactionCategory});
+  const {
+    values,
+    handleChange,
+    handleChangeCategory,
+    handleChangeWallet,
+    handleRepeatMode,
+    handleContinue,
+  } = useCreateTransaction();
+  const {navBarStyle, containerBoxStyle, dropDownContainer} =
+    useCreateTransactionStyle({
+      transactionCategory,
+    });
 
   return (
     <Container flex style={[navBarStyle]}>
@@ -43,47 +80,112 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
                 fontSize: 38,
               }}
               numberOfLines={1}
+              value={values.amount}
+              onChangeText={handleChange('amount')}
             />
           </Container>
 
-          <Container
-            flex
-            style={{
-              borderTopLeftRadius: theme.layout.borderRadiusHuge,
-              borderTopRightRadius: theme.layout.borderRadiusHuge,
-            }}>
-            <View style={{marginVertical: 24, marginHorizontal: 16}}>
+          <Container flex style={[containerBoxStyle]}>
+            <View style={styles.contentBox}>
               <Dropdown
-              // style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-              // placeholderStyle={styles.placeholderStyle}
-              // selectedTextStyle={styles.selectedTextStyle}
-              // inputSearchStyle={styles.inputSearchStyle}
-              // iconStyle={styles.iconStyle}
-              // data={data}
-              // search
-              // maxHeight={300}
-              labelField=""
-              valueField=""
-              placeholder={"Category"}
-              searchPlaceholder="Search..."
-              // value={value}
-              // onFocus={() => setIsFocus(true)}
-              // onBlur={() => setIsFocus(false)}
-              // onChange={item => {
-              //   setValue(item.value);
-              //   setIsFocus(false);
-              // }}
+                style={[styles.dropdown, dropDownContainer]}
+                placeholderStyle={[
+                  styles.placeholderStyle,
+                  {color: theme.color.placeholder},
+                ]}
+                selectedTextStyle={styles.selectedTextStyle}
+                iconStyle={styles.iconStyle}
+                data={EXPENSE_DATA}
+                labelField="label"
+                valueField="value"
+                placeholder="Category"
+                closeModalWhenSelectedItem={true}
+                value={values.category}
+                onChange={handleChangeCategory}
               />
 
               <AppInput
-                placeholder="description"
+                placeholder="Description"
                 containerStyle={{
-                  backgroundColor: 'transparent',
+                  height: 56,
+                  marginBottom: 16,
                 }}
-                // onChangeText={form.onChangeText}
-                // value={form.value}
+                value={values.description}
+                onChangeText={handleChange('description')}
               />
+
+              <Dropdown
+                style={[styles.dropdown, dropDownContainer]}
+                placeholderStyle={[
+                  styles.placeholderStyle,
+                  {color: theme.color.placeholder},
+                ]}
+                selectedTextStyle={styles.selectedTextStyle}
+                iconStyle={styles.iconStyle}
+                data={WALLET_DATA}
+                labelField="label"
+                valueField="value"
+                placeholder="Wallet"
+                closeModalWhenSelectedItem={true}
+                value={values.wallet}
+                onChange={handleChangeWallet}
+              />
+
+              <Button
+                renderIconLeft={(titleStyles) => (
+                  <Icon
+                    bundle={BundleIconSetName.ENTYPO}
+                    name="attachment"
+                    style={[titleStyles as any, {fontSize: 20, marginRight: 5}]}
+                  />
+                )}
+                title={'Add attachment'}
+                typoProps={{
+                  type: TypographyType.CAPTION,
+                }}
+                titleStyle={{
+                  color: theme.color.placeholder,
+                }}
+                style={[dropDownContainer, styles.buttonAddAttachment]}
+              />
+
+              <View style={styles.sectionRepeat}>
+                <View>
+                  <Typography type={TypographyType.LABEL_LARGE}>
+                    Repeat
+                  </Typography>
+                  <Typography
+                    type={TypographyType.LABEL_SEMI_MEDIUM_TERTIARY}
+                    style={{color: theme.color.placeholder}}>
+                    Repeat Transaction
+                  </Typography>
+                </View>
+
+                <Switch
+                  value={values.repeatMode}
+                  thumbColor={
+                    values.repeatMode
+                      ? (theme.color.primary as string)
+                      : theme.color.disabled
+                  }
+                  trackColor={{
+                    true: theme.color.primary20 as string,
+                  }}
+                  onValueChange={handleRepeatMode}
+                />
+              </View>
             </View>
+
+            <FilledButton
+              onPress={handleContinue}
+              primary
+              rounded={ButtonRoundedType.MEDIUM}
+              title={'Continue'}
+              style={styles.buttonContainer}
+              typoProps={{
+                type: TypographyType.BUTTON_TEXT,
+              }}
+            />
           </Container>
         </>
       </TouchableWithoutFeedback>
