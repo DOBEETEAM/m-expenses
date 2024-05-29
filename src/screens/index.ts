@@ -9,3 +9,4 @@ export * from './transaction-history';
 export * from './budget';
 export * from './profile';
 export * from './create-transaction';
+export * from './notification';

@@ -19,6 +19,7 @@ import {
   SignUp,
   ForgotPassword,
   CreateTransaction,
+  Notification,
 } from '@screens';
 // @others
 import {appSelector, toggleModalAddTransaction} from '@features/app';
@@ -61,6 +62,7 @@ export function AppNavigator() {
       <AppStack.Screen name={'ForgotPassword'} component={ForgotPassword} />
 
       <AppStack.Screen name="CreateTransaction" component={CreateTransaction} />
+      <AppStack.Screen name="Notification" component={Notification} />
 
       <AppStack.Screen name="BottomTab" component={BottomTabNavigator} />
     </AppStack.Navigator>

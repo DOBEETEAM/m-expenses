@@ -8,4 +8,5 @@ export type AppStackParamList = {
   CreateTransaction: {
     transactionCategory: 'Income' | 'Expense' | 'Transfer';
   };
+  Notification: undefined;
 };
