@@ -39,4 +39,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
+  dropdownTransfer: {
+    height: 56,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 16,
+    flex: 1 
+  },
+  iconTransferContainer: {
+    padding: 8,
+    marginBottom: 15
+  }
 });

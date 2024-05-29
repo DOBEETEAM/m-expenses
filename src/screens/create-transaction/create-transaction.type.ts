@@ -3,15 +3,24 @@ import {AppScreenProps} from '@data/models';
 export interface CreateTransactionProps
   extends AppScreenProps<'CreateTransaction'> {}
 
-export type UseCreateTransactionProps = {
-  transactionCategory?: 'Income' | 'Expense' | 'Transfer';
+export type TransactionType = 'Income' | 'Expense' | 'Transfer';
+
+export interface UseCreateTransactionProps {
+  transactionCategory: TransactionType;
 };
 
 export interface InitValueFormik {
   amount: string;
-  category: string;
   description: string;
-  wallet: string;
-  repeatMode: boolean;
   attachments: string;
+  category?: string;
+  wallet?: string;
+  repeatMode?: boolean;
+  // Transfer transaction
+  fromWallet?: string;
+  toWallet?: string;
+};
+
+export type InfoTransaction = InitValueFormik & {
+  type: TransactionType;
 }

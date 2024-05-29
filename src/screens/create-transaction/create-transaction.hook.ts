@@ -1,27 +1,43 @@
-import {useTheme} from '@shared/hooks';
-import {
-  InitValueFormik,
-  UseCreateTransactionProps,
-} from './create-transaction.type';
 import {useCallback, useMemo} from 'react';
-import {Colors} from '@resources/values';
 import {useFormik} from 'formik';
+import type {
+  UseCreateTransactionProps,
+  InitValueFormik,
+  InfoTransaction,
+} from './create-transaction.type';
+import {Colors} from '@resources/values';
+import {useTheme} from '@shared/hooks';
 
-export function useCreateTransaction() {
+export function useCreateTransaction({
+  transactionCategory,
+}: UseCreateTransactionProps) {
   const {values, handleChange, setFieldValue, handleSubmit} =
     useFormik<InitValueFormik>({
-      initialValues: {
-        amount: '',
-        category: '',
-        description: '',
-        wallet: '',
-        repeatMode: false,
-        attachments: '',
-      },
+      initialValues:
+        transactionCategory === 'Transfer'
+          ? {
+              amount: '',
+              description: '',
+              fromWallet: '',
+              toWallet: '',
+              attachments: '',
+            }
+          : {
+              amount: '',
+              category: '',
+              description: '',
+              wallet: '',
+              repeatMode: false,
+              attachments: '',
+            },
       onSubmit: (value, {resetForm}) => {
-        console.log(value);
+        const infoTransaction: InfoTransaction = {
+          ...value,
+          type: transactionCategory,
+        };
+        console.log(infoTransaction);
 
-        resetForm()
+        resetForm();
       },
     });
 
@@ -50,6 +66,20 @@ export function useCreateTransaction() {
     [setFieldValue],
   );
 
+  const handleChangeFromWallet = useCallback(
+    (item: {label: string; value: string}) => {
+      setFieldValue('fromWallet', item.value);
+    },
+    [setFieldValue],
+  );
+
+  const handleChangeToWallet = useCallback(
+    (item: {label: string; value: string}) => {
+      setFieldValue('toWallet', item.value);
+    },
+    [setFieldValue],
+  );
+
   return {
     values,
     handleChange,
@@ -59,6 +89,9 @@ export function useCreateTransaction() {
     handleChangeCategory,
     handleChangeWallet,
     handleRepeatMode,
+
+    handleChangeFromWallet,
+    handleChangeToWallet,
   };
 }
 
@@ -83,6 +116,15 @@ export function useCreateTransactionStyle({
     [theme],
   );
 
+  const iconTransferContainerStyle = useMemo(
+    () => ({
+      borderWidth: theme.layout.borderWidthSmall,
+      borderRadius: theme.layout.borderRadiusGigantic,
+      borderColor: theme.color.disabled,
+    }),
+    [theme],
+  );
+
   const navBarStyle = useMemo(() => {
     if (transactionCategory === 'Expense') {
       return {
@@ -99,5 +141,10 @@ export function useCreateTransactionStyle({
     }
   }, [transactionCategory]);
 
-  return {navBarStyle, containerBoxStyle, dropDownContainer};
+  return {
+    navBarStyle,
+    containerBoxStyle,
+    dropDownContainer,
+    iconTransferContainerStyle,
+  };
 }
