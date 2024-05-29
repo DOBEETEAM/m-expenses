@@ -1,5 +1,7 @@
 import {useCallback, useMemo, useState} from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 // @types
+import {AppStackParamList} from '@data/models';
 import {UseHomeProps} from './home.type';
 // @hooks
 import {useTheme} from '@shared/hooks';
@@ -7,16 +9,22 @@ import {useTheme} from '@shared/hooks';
 import {styles} from './home.style';
 
 export function useHome() {
-  const [isRefreshing, setRefreshing] = useState(false)
+  const {navigate} = useNavigation<NavigationProp<AppStackParamList>>();
+  const [isRefreshing, setRefreshing] = useState(false);
+
+  const handleOpenNotify = useCallback(() => {
+    navigate('Notification');
+  }, [navigate]);
 
   const handleRefreshing = useCallback(() => {
-    setRefreshing(true)
-  }, [])
+    setRefreshing(true);
+  }, []);
 
   return {
     isRefreshing,
-    handleRefreshing
-  }
+    handleRefreshing,
+    handleOpenNotify,
+  };
 }
 
 export function useHomeStyle() {

@@ -20,6 +20,7 @@ import {
   FilledButton,
   Icon,
   NavBar,
+  ScreenWrapper,
   Typography,
 } from '@components/base';
 // @styles
@@ -141,13 +142,16 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <Container flex style={[navBarStyle]}>
-        <NavBar
-          back
-          title={transactionCategory}
-          containerStyle={[navBarStyle]}
-        />
-
+      <ScreenWrapper
+        noBackground
+        style={[navBarStyle]}
+        headerComponent={
+          <NavBar
+            back
+            title={transactionCategory}
+            containerStyle={[navBarStyle, {marginHorizontal: 15}]}
+          />
+        }>
         <Container noBackground style={{marginHorizontal: 25, marginTop: 50}}>
           <Typography type={TypographyType.TITLE_SEMI_LARGE_TERTIARY}>
             How much?
@@ -276,7 +280,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
             }}
           />
         </Container>
-      </Container>
+      </ScreenWrapper>
     </TouchableWithoutFeedback>
   );
 };

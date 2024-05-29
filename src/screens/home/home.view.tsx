@@ -19,17 +19,17 @@ import {
   Typography,
   Container,
   IconButton,
-  ActivityIndicator,
+  ScreenWrapper,
 } from '@components/base';
 import {HomeSection, IncomeExpenseCard, TransactionItem} from '@components';
 // @styles
 import {styles} from './home.style';
 import {formatCurrency} from '@utils';
 
-const _Home: React.FC<HomeProps> = () => {
+const _Home: React.FC<HomeProps> = ({navigation}) => {
   const {t} = useTranslation(['theme']);
   const {theme} = useTheme();
-  const {isRefreshing} = useHome()
+  const {handleOpenNotify} = useHome();
   const {btnMonthStyle, linearContainerStyle} = useHomeStyle();
 
   const renderAvatarUser = useCallback(() => {
@@ -58,6 +58,7 @@ const _Home: React.FC<HomeProps> = () => {
   const renderIconNotification = useCallback(() => {
     return (
       <IconButton
+        onPress={handleOpenNotify}
         bundle={BundleIconSetName.MATERIAL_COMMUNITY_ICONS}
         name="bell"
         iconStyle={[styles.iconNotify, {color: theme.color.primary}]}
@@ -65,8 +66,8 @@ const _Home: React.FC<HomeProps> = () => {
     );
   }, [theme]);
 
-  return (
-    <>
+  const renderHeaderNav = useCallback(
+    () => (
       <LinearGradient colors={['#F8EDD8', '#FFF6E5']}>
         <NavBar
           back={false}
@@ -76,7 +77,12 @@ const _Home: React.FC<HomeProps> = () => {
           renderLeft={renderAvatarUser}
         />
       </LinearGradient>
+    ),
+    [renderIconNotification, renderFilterMonth, renderAvatarUser],
+  );
 
+  return (
+    <ScreenWrapper safeLayout noBackground headerComponent={renderHeaderNav()}>
       <ScrollView
         useGestureHandler
         safeLayout
@@ -123,10 +129,18 @@ const _Home: React.FC<HomeProps> = () => {
               timeTransaction="12:34"
               type="Income"
             />
+
+            <TransactionItem
+              title="Have receive"
+              description="someone has gave"
+              amount={formatCurrency(Number('18020000'))}
+              timeTransaction="12:34"
+              type="Income"
+            />
           </HomeSection>
         </Container>
       </ScrollView>
-    </>
+    </ScreenWrapper>
   );
 };
 
