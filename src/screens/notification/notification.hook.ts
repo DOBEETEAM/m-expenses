@@ -15,7 +15,16 @@ export function useNotificationStyle() {
     [theme],
   );
 
+  const containerStyle = useMemo(
+    () => ({
+      backgroundColor: theme.color.surface,
+      paddingHorizontal: 15
+    }),
+    [theme],
+  );
+
   return {
+    containerStyle,
     iconMoreStyle,
   };
 }

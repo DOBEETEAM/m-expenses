@@ -38,7 +38,7 @@ const DATA_NOTIFY = [
 ];
 
 const _Notification: React.FC<NotificationProps> = () => {
-  const {iconMoreStyle} = useNotificationStyle();
+  const {iconMoreStyle, containerStyle} = useNotificationStyle();
 
   const renderNotifyItem = useCallback(
     ({item, index}: {item: any; index: number}) => {
@@ -85,7 +85,8 @@ const _Notification: React.FC<NotificationProps> = () => {
   return (
     <ScreenWrapper
       safeLayout
-      style={{marginHorizontal: 15}}
+      // safeTopLayout
+      style={[containerStyle]}
       headerComponent={
         <NavBar
           primary={false}
@@ -99,6 +100,11 @@ const _Notification: React.FC<NotificationProps> = () => {
         data={DATA_NOTIFY}
         renderItem={renderNotifyItem}
         keyExtractor={(item, index) => String(item.id || index)}
+        /**
+         * TODO:
+         * Component empty data
+         * Modal when press icon More Options
+         */
       />
     </ScreenWrapper>
   );
