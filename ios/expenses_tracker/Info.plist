@@ -73,5 +73,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+  	<string>Ứng dụng này cần truy cập máy ảnh để chụp ảnh và quay video.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+  	<string>Ứng dụng này cần truy cập thư viện ảnh của bạn để chọn và tải lên ảnh.</string>
+  	<key>NSPhotoLibraryAddUsageDescription</key>
+  	<string>Ứng dụng này cần quyền thêm ảnh vào thư viện ảnh của bạn.</string>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>Ứng dụng này cần quyền gửi thông báo cho bạn.</string>
 </dict>
 </plist>
