@@ -1,12 +1,12 @@
 import React, {useCallback} from 'react';
 import {View} from 'react-native';
 // @packages
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 // @types
 import {NotificationProps} from './notification.type';
 import {TypographyType} from '@resources/theme';
 // @hooks
-import {useNotificationStyle} from './notification.hook';
+import {useNotification, useNotificationStyle} from './notification.hook';
 // @helpers
 import {summarizedText} from '@utils';
 // @components
@@ -14,13 +14,16 @@ import {
   BundleIconSetName,
   Button,
   Container,
+  Icon,
   IconButton,
   NavBar,
   ScreenWrapper,
   Typography,
 } from '@components/base';
+import {ListEmpty, ModalTooltip} from '@components';
 // @styles
 import {styles} from './notification.style';
+import {useTheme} from '@shared/hooks';
 
 const DATA_NOTIFY = [
   {
@@ -38,25 +41,49 @@ const DATA_NOTIFY = [
 ];
 
 const _Notification: React.FC<NotificationProps> = () => {
-  const {iconMoreStyle, containerStyle} = useNotificationStyle();
+  const {theme} = useTheme();
+  const {optionsMore, toggleModalNotify, handleToggleModal} = useNotification();
+  const {iconMoreStyle, containerStyle, itemNotifyStyle} =
+    useNotificationStyle();
+
+  const renderContentTooltip = useCallback(() => {
+    return optionsMore.map((option, index) => {
+      return (
+        <Button
+          onPress={option.onPress}
+          key={option.id || index}
+          useContentContainer
+          style={[
+            itemNotifyStyle,
+            {paddingHorizontal: 25, paddingVertical: 15},
+          ]}>
+          <Typography type={TypographyType.LABEL_MEDIUM}>
+            {option.title}
+          </Typography>
+        </Button>
+      );
+    });
+  }, [optionsMore, itemNotifyStyle]);
 
   const renderNotifyItem = useCallback(
     ({item, index}: {item: any; index: number}) => {
       return (
-        <Button>
+        <Button activeOpacity={0.8}>
           <Container
             noBackground
             flex
             row
             centerVertical
-            style={{marginBottom: 15, justifyContent: 'space-between'}}>
-            <View style={{flex: 1, maxWidth: 292}}>
+            style={[styles.itemNotify, itemNotifyStyle]}>
+            <View style={styles.itemNotifyContent}>
               <Typography
-                style={{marginBottom: 5}}
-                type={TypographyType.TITLE_SEMI_LARGE}>
+                style={{marginBottom: 4}}
+                type={TypographyType.LABEL_LARGE}>
                 {item.title}
               </Typography>
-              <Typography type={TypographyType.TITLE_MEDIUM_TERTIARY}>
+              <Typography
+                style={{marginBottom: 5}}
+                type={TypographyType.LABEL_MEDIUM_TERTIARY}>
                 {summarizedText(item.description || '', 35)}
               </Typography>
             </View>
@@ -68,24 +95,43 @@ const _Notification: React.FC<NotificationProps> = () => {
         </Button>
       );
     },
-    [],
+    [itemNotifyStyle],
   );
+
+  const renderEmptyComponent = useCallback(() => {
+    return (
+      <ListEmpty
+        icon={
+          <Icon
+            bundle={BundleIconSetName.IONICONS}
+            name="notifications-off-sharp"
+            style={{
+              fontSize: 30,
+              color: theme.color.contentBackgroundStrong,
+              marginBottom: 10,
+            }}
+          />
+        }
+        title="There is no notification for now"
+      />
+    );
+  }, [theme]);
 
   const renderRight = useCallback(
     () => (
       <IconButton
-        bundle={BundleIconSetName.ENTYPO}
-        name="dots-three-horizontal"
+        onPress={handleToggleModal}
+        bundle={BundleIconSetName.FEATHER}
+        name="more-horizontal"
         iconStyle={iconMoreStyle}
       />
     ),
-    [iconMoreStyle],
+    [iconMoreStyle, handleToggleModal],
   );
 
   return (
     <ScreenWrapper
       safeLayout
-      // safeTopLayout
       style={[containerStyle]}
       headerComponent={
         <NavBar
@@ -94,18 +140,19 @@ const _Notification: React.FC<NotificationProps> = () => {
           back
           title="Notification"
           renderRight={renderRight}
+          containerStyle={{marginHorizontal: 5}}
         />
       }>
       <FlatList
         data={DATA_NOTIFY}
         renderItem={renderNotifyItem}
         keyExtractor={(item, index) => String(item.id || index)}
-        /**
-         * TODO:
-         * Component empty data
-         * Modal when press icon More Options
-         */
+        ListEmptyComponent={renderEmptyComponent()}
       />
+
+      <ModalTooltip visible={toggleModalNotify} containerStyle={styles.tooltip}>
+        {renderContentTooltip()}
+      </ModalTooltip>
     </ScreenWrapper>
   );
 };
