@@ -1,4 +1,6 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
+// @packages
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 // @types
 import {ModalTooltipProps} from './modal-tooltip.type';
 import {ViewStyle} from '@data/models';
@@ -12,25 +14,40 @@ const _ModalTooltip: React.FC<ModalTooltipProps> = ({
   children,
   visible,
   containerStyle,
+  onClose,
 }) => {
   const {theme} = useTheme();
 
   const containerModalStyle: ViewStyle = useMemo(() => {
     return [
+      styles.contentContainer,
       {
         ...theme.layout.shadow,
-        position: 'absolute',
         borderRadius: theme.layout.borderRadiusSmall,
       },
       containerStyle,
     ];
   }, [theme, containerStyle]);
 
+  const handlePressBackdrop = useCallback(() => {
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose]);
+
   if (!visible) {
     return null;
   }
 
-  return <Container style={containerModalStyle}>{children}</Container>;
+  return (
+    <>
+      <Container style={containerModalStyle}>{children}</Container>
+
+      <TouchableWithoutFeedback
+        onPress={handlePressBackdrop}
+        style={styles.backdropContainer}></TouchableWithoutFeedback>
+    </>
+  );
 };
 
 export const ModalTooltip = React.memo(_ModalTooltip);

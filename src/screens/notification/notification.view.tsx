@@ -150,7 +150,10 @@ const _Notification: React.FC<NotificationProps> = () => {
         ListEmptyComponent={renderEmptyComponent()}
       />
 
-      <ModalTooltip visible={toggleModalNotify} containerStyle={styles.tooltip}>
+      <ModalTooltip
+        visible={toggleModalNotify}
+        onClose={handleToggleModal}
+        containerStyle={styles.tooltip}>
         {renderContentTooltip()}
       </ModalTooltip>
     </ScreenWrapper>
