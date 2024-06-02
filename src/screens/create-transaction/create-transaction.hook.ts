@@ -1,11 +1,16 @@
 import {useCallback, useMemo} from 'react';
 import {useFormik} from 'formik';
+
+import {Asset} from 'react-native-image-picker';
 import type {
   UseCreateTransactionProps,
   InitValueFormik,
   InfoTransaction,
+  AttachmentImage,
 } from './create-transaction.type';
+
 import {Colors} from '@resources/values';
+
 import {useTheme} from '@shared/hooks';
 
 export function useCreateTransaction({
@@ -20,7 +25,7 @@ export function useCreateTransaction({
               description: '',
               fromWallet: '',
               toWallet: '',
-              attachments: '',
+              attachments: null,
             }
           : {
               amount: '',
@@ -28,7 +33,7 @@ export function useCreateTransaction({
               description: '',
               wallet: '',
               repeatMode: false,
-              attachments: '',
+              attachments: null,
             },
       onSubmit: (value, {resetForm}) => {
         const infoTransaction: InfoTransaction = {
@@ -44,6 +49,22 @@ export function useCreateTransaction({
   const handleContinue = useCallback(() => {
     handleSubmit();
   }, [handleSubmit]);
+
+  const handleChangeAttachment = useCallback((images: Asset[] | undefined) => {
+    if (images && images.length == 0) {
+      return;
+    }
+
+    const imagesFormatted: AttachmentImage[] | undefined = images?.map((image, index) => {
+      return {
+        title: image?.fileName,
+        imageType: image?.type,
+        uri: image?.uri
+      }
+    })
+    console.log("handleChangeAttachment ", imagesFormatted);
+    setFieldValue('attachments', imagesFormatted);
+  }, [setFieldValue])
 
   const handleChangeCategory = useCallback(
     (item: {label: string; value: string}) => {
@@ -92,6 +113,7 @@ export function useCreateTransaction({
 
     handleChangeFromWallet,
     handleChangeToWallet,
+    handleChangeAttachment
   };
 }
 

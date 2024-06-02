@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   contentBox: {
     marginVertical: 24,
-    marginHorizontal: 16,
+    paddingHorizontal: 16,
   },
   dropdown: {
     height: 56,
@@ -38,6 +38,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
+  },
+  iconAddAttachment: {
+    fontSize: 20, 
+    marginRight: 5
   },
   dropdownTransfer: {
     height: 56,

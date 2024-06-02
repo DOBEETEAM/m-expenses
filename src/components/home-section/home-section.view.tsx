@@ -1,13 +1,16 @@
-import React, {useCallback, useMemo} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useMemo} from 'react';
 import type {HomeSectionProps} from './home-section.type';
 import {TypographyType} from '@resources/theme';
 import {useTheme} from '@shared/hooks';
 import {Container, Typography, Button} from '@components/base';
 import {styles} from './home-section.style';
-import {hexToRgba} from '@utils/color';
 
-const _HomeSection: React.FC<HomeSectionProps> = ({children, title, renderTitle, containerStyle}) => {
+const _HomeSection: React.FC<HomeSectionProps> = ({
+  children,
+  title,
+  renderTitle,
+  containerStyle,
+}) => {
   const {theme} = useTheme();
 
   const buttonSeeAll = useMemo(
@@ -24,11 +27,15 @@ const _HomeSection: React.FC<HomeSectionProps> = ({children, title, renderTitle,
   return (
     <Container noBackground>
       <Container noBackground flex row centerVertical style={styles.container}>
-        {
-          renderTitle ? renderTitle() : (
-            <Typography type={TypographyType.TITLE_LARGE} style={{fontWeight: '600'}}>{title}</Typography>
-          )
-        }
+        {renderTitle ? (
+          renderTitle()
+        ) : (
+          <Typography
+            type={TypographyType.TITLE_LARGE}
+            style={{fontWeight: '600'}}>
+            {title}
+          </Typography>
+        )}
         <Button
           style={buttonSeeAll}
           title="See All"
@@ -38,7 +45,6 @@ const _HomeSection: React.FC<HomeSectionProps> = ({children, title, renderTitle,
 
       {children && children}
     </Container>
-
   );
 };
 
