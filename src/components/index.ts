@@ -7,3 +7,4 @@ export * from './list-empty';
 export * from './modal-tooltip';
 export * from './modal-media-picker';
 export * from './images-list';
+export * from './app-modal';
