@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo} from 'react';
 import {View} from 'react-native';
 // @packages
 import Modal from 'react-native-modal';
@@ -22,25 +22,28 @@ const _ModalMediaPicker: React.FC<ModalMediaPickerProps> = ({
   onPhotoSelected,
 }) => {
   const {theme} = useTheme();
-  const {imagesResult, handleOpenPhoto} = useMediaPicker();
+  const {imagesResult, handleOpenPhoto, handleOpenCamera} = useMediaPicker();
 
   const optData: OptionButtonPicker[] = [
     {
       name: 'Camera',
       icon: 'camera',
-      onPress: () => {},
+      onPress: handleOpenCamera,
     },
     {
       name: 'Image',
       icon: 'image',
-      onPress: () => {
-        handleOpenPhoto();
-      },
+      onPress: handleOpenPhoto,
     },
   ];
 
   useEffect(() => {
-    if (imagesResult && imagesResult.length > 0 && onPhotoSelected) {
+    if (typeof onPhotoSelected === 'undefined') {
+      console.error('Have not pass onPhotoSelected props or onPhotoSelected is undefined')
+      return;
+    }
+
+    if (imagesResult && imagesResult.length > 0) {
       onPhotoSelected(imagesResult);
     }
   }, [imagesResult, onPhotoSelected]);
@@ -89,7 +92,7 @@ const _ModalMediaPicker: React.FC<ModalMediaPickerProps> = ({
         </Typography>
       </Button>
     ));
-  }, [btnContentStyle, iconStyle]);
+  }, [optData, btnContentStyle, iconStyle]);
 
   return (
     <Modal

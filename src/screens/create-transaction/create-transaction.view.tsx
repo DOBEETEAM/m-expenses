@@ -53,7 +53,8 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
 }) => {
   const {theme} = useTheme();
   const {transactionCategory} = route.params;
-  const {isVisible, onShowVisible, onHideVisible} = useToggle();
+  const {isVisible, onToggle} = useToggle();
+
   const {
     values,
     handleChange,
@@ -65,6 +66,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
     handleContinue,
     handleChangeAttachment,
   } = useCreateTransaction({transactionCategory});
+
   const {
     navBarStyle,
     containerBoxStyle,
@@ -135,7 +137,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
         />
 
         <Button
-          onPress={onShowVisible}
+          onPress={onToggle}
           renderIconLeft={(titleStyles) => (
             <Icon
               bundle={BundleIconSetName.ENTYPO}
@@ -161,7 +163,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
     dropDownContainer,
     iconTransferContainerStyle,
     handleChange,
-    onShowVisible,
+    onToggle,
     handleChangeFromWallet,
     handleChangeToWallet,
     renderAttachments,
@@ -256,7 +258,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
                   />
 
                   <Button
-                    onPress={onShowVisible}
+                    onPress={onToggle}
                     renderIconLeft={(titleStyles) => (
                       <Icon
                         bundle={BundleIconSetName.ENTYPO}
@@ -321,7 +323,7 @@ const _CreateTransaction: React.FC<CreateTransactionProps> = ({
 
         <ModalMediaPicker
           isVisible={isVisible}
-          onClose={onHideVisible}
+          onClose={onToggle}
           onPhotoSelected={handleChangeAttachment}
         />
       </>

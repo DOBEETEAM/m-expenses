@@ -8,6 +8,7 @@ export const styles = StyleSheet.create({
     width: 118,
     height: 117,
     justifyContent: 'flex-end',
+    marginRight: 10
   },
   image: {
     width: 112,

@@ -1,12 +1,15 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-
+// @types
 import {TypographyType} from '@resources/theme';
 import {ListEmptyProps} from './list-empty.type';
-
-import {BundleIconSetName, Container, Icon, Typography} from '@components/base';
-import {styles} from './list-empty.style';
+// @hooks
 import {useTheme} from '@shared/hooks';
+// @constants
+import {BundleIconSetName} from '@components/base';
+// @components
+import {Container, Icon, Typography} from '@components/base';
+// @styles
+import {styles} from './list-empty.style';
 
 const _ListEmpty: React.FC<ListEmptyProps> = ({icon, title}) => {
   const {theme} = useTheme();

@@ -4,18 +4,41 @@ import {
   launchImageLibrary,
   Asset,
 } from 'react-native-image-picker';
+import {requestCameraPerm} from '@helpers/permissions';
 
 export function useMediaPicker() {
-  const [cameraResult, setCameraResult] = useState();
   const [imagesResult, setImagesResult] = useState<Asset[] | undefined>();
 
-  const handleOpenCamera = useCallback(() => {}, []);
+  const handleOpenCamera = useCallback(async () => {
+    try {
+      const allowUseCameraCode = await requestCameraPerm();
+
+      if (allowUseCameraCode === 'granted') {
+        const result = await launchCamera({
+          mediaType: 'photo',
+          quality: 1,
+          // saveToPhotos: true,
+        });
+
+        if (result.didCancel) {
+          console.log(
+            'user did cancel to capture image by camera'
+          );
+          return;
+        }
+
+        setImagesResult(result.assets);
+      }
+    } catch (error) {
+      throw new Error('error_open_camera: ' + error);
+    }
+  }, []);
 
   const handleOpenPhoto = useCallback(async () => {
     try {
       const result = await launchImageLibrary({
         mediaType: 'photo',
-        quality: 0.8,
+        quality: 1,
         includeBase64: false,
         selectionLimit: 5,
       });
@@ -34,5 +57,6 @@ export function useMediaPicker() {
   return {
     imagesResult,
     handleOpenPhoto,
+    handleOpenCamera,
   };
 }

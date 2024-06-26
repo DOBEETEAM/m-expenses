@@ -3,15 +3,15 @@ import {useCallback, useState} from 'react';
 export function useToggle() {
   const [isVisible, setVisible] = useState(false);
 
-  const onShowVisible = useCallback(() => {
+  const onShowVisible: () => void = useCallback(() => {
     setVisible(true);
   }, []);
 
-  const onHideVisible = useCallback(() => {
+  const onHideVisible: () => void = useCallback(() => {
     setVisible(false);
   }, []);
 
-  const onToggle = useCallback(() => {
+  const onToggle: () => void = useCallback(() => {
     setVisible((prevState) => !prevState);
   }, []);
 
