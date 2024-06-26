@@ -1,10 +1,13 @@
 import React, {useMemo} from 'react';
-import {Text, View} from 'react-native';
 // @types
 import {IncomeExpenseCardProps} from './income-expense-card.type';
 import {TypographyType} from '@resources/theme';
 // @constants
 import {Colors} from '@resources/values';
+// @helpers
+import {formatCurrency} from '@utils';
+// @hooks
+import {useTheme} from '@shared/hooks';
 // @components
 import {Container, Typography} from '@components/base';
 // @styles
@@ -12,8 +15,6 @@ import {styles} from './income-expense-card.style';
 // @images
 import IncomeSvg from '@assets/icons/income.svg';
 import ExpenseSvg from '@assets/icons/expense.svg';
-import {useTheme} from '@shared/hooks';
-import { formatCurrency } from '@utils';
 
 const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
   const {theme} = useTheme();
@@ -31,7 +32,7 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
       borderRadius: theme.layout.borderRadiusLarge,
       padding: 6,
       marginRight: 10,
-      height: 48
+      height: 48,
     }),
     [theme],
   );
@@ -59,7 +60,9 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
             <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
               Income
             </Typography>
-            <Typography type={TypographyType.LABEL_SEMI_HUGE} style={[labelStyle, styles.totalMoneyCard]}>
+            <Typography
+              type={TypographyType.LABEL_SEMI_HUGE}
+              style={[labelStyle, styles.totalMoneyCard]}>
               {formatCurrency(Number('340000'))}
             </Typography>
           </>
@@ -68,7 +71,9 @@ const _IncomeExpenseCard: React.FC<IncomeExpenseCardProps> = ({type}) => {
             <Typography type={TypographyType.LABEL_LARGE} style={[labelStyle]}>
               Expense
             </Typography>
-            <Typography type={TypographyType.LABEL_SEMI_HUGE} style={[labelStyle, styles.totalMoneyCard]}>
+            <Typography
+              type={TypographyType.LABEL_SEMI_HUGE}
+              style={[labelStyle, styles.totalMoneyCard]}>
               {formatCurrency(Number('560000'))}
             </Typography>
           </>
