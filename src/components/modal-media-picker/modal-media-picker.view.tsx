@@ -1,17 +1,14 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
-import {View} from 'react-native';
-// @packages
-import Modal from 'react-native-modal';
 // @types
 import {
   ModalMediaPickerProps,
   OptionButtonPicker,
 } from './modal-media-picker.type';
 import {TypographyType} from '@resources/theme';
-import {ViewStyle} from '@data/models';
 // @hooks
 import {useMediaPicker, useTheme} from '@shared/hooks';
 // @components
+import {AppModal} from '..';
 import {Typography, Container, Icon, Button} from '@components/base';
 // @styles
 import {styles} from './modal-media-picker.style';
@@ -39,7 +36,9 @@ const _ModalMediaPicker: React.FC<ModalMediaPickerProps> = ({
 
   useEffect(() => {
     if (typeof onPhotoSelected === 'undefined') {
-      console.error('Have not pass onPhotoSelected props or onPhotoSelected is undefined')
+      console.error(
+        'Have not pass onPhotoSelected props or onPhotoSelected is undefined',
+      );
       return;
     }
 
@@ -47,22 +46,6 @@ const _ModalMediaPicker: React.FC<ModalMediaPickerProps> = ({
       onPhotoSelected(imagesResult);
     }
   }, [imagesResult, onPhotoSelected]);
-
-  const contentContainerStyle: ViewStyle = useMemo(
-    () => ({
-      borderTopLeftRadius: theme.layout.borderRadiusGigantic,
-      borderTopRightRadius: theme.layout.borderRadiusGigantic,
-    }),
-    [theme],
-  );
-
-  const lineTopModalStyle = useMemo(
-    () => ({
-      backgroundColor: theme.color.background,
-      borderRadius: theme.layout.borderRadiusGigantic,
-    }),
-    [theme],
-  );
 
   const btnContentStyle = useMemo(
     () => ({
@@ -95,23 +78,11 @@ const _ModalMediaPicker: React.FC<ModalMediaPickerProps> = ({
   }, [optData, btnContentStyle, iconStyle]);
 
   return (
-    <Modal
-      isVisible={isVisible}
-      backdropOpacity={0.2}
-      useNativeDriverForBackdrop
-      swipeDirection={['down']}
-      onSwipeComplete={onClose}
-      onBackdropPress={onClose}
-      onBackButtonPress={onClose}
-      style={styles.container}>
-      <Container style={[styles.contentContainer, contentContainerStyle]}>
-        <View style={[styles.lineTopModal, lineTopModalStyle]} />
-
-        <Container style={styles.btnOptionContainer} noBackground flex row>
-          {renderContent()}
-        </Container>
+    <AppModal isVisible={isVisible} onCloseModal={onClose}>
+      <Container style={styles.btnOptionContainer} noBackground flex row>
+        {renderContent()}
       </Container>
-    </Modal>
+    </AppModal>
   );
 };
 
