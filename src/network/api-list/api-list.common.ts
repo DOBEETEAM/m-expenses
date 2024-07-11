@@ -3,9 +3,9 @@ import {BaseApi} from './api-list.base';
 
 export const commonApi = {
   get signIn() {
-    return BaseApi.baseDomain + 'api/v1/users/sign-in';
+    return BaseApi.baseDomain + 'api/sign-in';
   },
   get signUp() {
-    return BaseApi.baseDomain + 'api/v1/users/sign-up';
+    return BaseApi.baseDomain + 'api/sign-up';
   },
 };

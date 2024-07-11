@@ -8,9 +8,15 @@ import {ApiRequestor} from '@data/models/base';
  * @author Đông Ngô <dongnbas@gmail.com>
  */
 class _BaseApiHandler {
-  constructor() {}
+  #_accessToken = ''
 
-  updateTokenAuthorization() {}
+  constructor() {
+
+  }
+
+  updateTokenAuthorization(accessToken: string) {
+
+  }
 
   get<T>(api: string, config: AxiosRequestConfig = {}): ApiRequestor<T> {
     const controller = new AbortController();
