@@ -39,6 +39,7 @@ const _Button = forwardRef(
       renderTitleComponent,
       renderContentContainerComponent,
       renderIconLeft,
+      renderIconRight,
 
       ...props
     }: BaseButtonProps,
@@ -79,8 +80,9 @@ const _Button = forwardRef(
           ) : (
             children
           )}
-          {/* {!!renderIconRight && renderIconRight(titleStyles, {}, fontStyle)}
-          {iconRight} */}
+          
+          {!!renderIconRight && renderIconRight(titleStyles, {}, {})}
+          {/* {iconRight} */}
         </ContentContainer>
       );
     };
