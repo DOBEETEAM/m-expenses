@@ -6,4 +6,6 @@ export interface AppModalProps {
   children: Children;
   onCloseModal: () => void;
   containerStyle?: ViewStyle;
+  contentStyle?: ViewStyle;
+  useContainer?: boolean;
 }

@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     margin: 0,
   },
   contentContainer: {
-    height: 171,
+    minHeight: 171,
   },
   lineTopModal: {
     width: 36,

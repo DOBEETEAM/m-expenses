@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {Fragment, useCallback, useMemo} from 'react';
 import {View} from 'react-native';
 // @packages
 import Modal from 'react-native-modal';
@@ -14,7 +14,17 @@ import {Container} from '@components/base';
 import {styles} from './app-modal.style';
 
 const _AppModal: React.FC<AppModalProps> = React.forwardRef(
-  ({isVisible, children, onCloseModal, containerStyle}, ref: Ref) => {
+  (
+    {
+      isVisible,
+      useContainer,
+      children,
+      onCloseModal,
+      containerStyle,
+      contentStyle,
+    },
+    ref: Ref,
+  ) => {
     const {theme} = useTheme();
 
     const contentContainerStyle: ViewStyle = useMemo(() => {
@@ -35,6 +45,19 @@ const _AppModal: React.FC<AppModalProps> = React.forwardRef(
       [theme],
     );
 
+    const WrappedChildren = useCallback(
+      (children: any) => {
+        const WrapperContainer = useContainer ? Container : Fragment;
+        let props = undefined;
+        if (useContainer) {
+          props = {flex: true, noBackground: true, style: [contentStyle]};
+        }
+
+        return <WrapperContainer {...props}>{children}</WrapperContainer>;
+      },
+      [useContainer, contentStyle],
+    );
+
     return (
       <Modal
         ref={ref}
@@ -49,7 +72,7 @@ const _AppModal: React.FC<AppModalProps> = React.forwardRef(
         <Container style={[styles.contentContainer, contentContainerStyle]}>
           <View style={[styles.lineTopModal, lineTopModalStyle]} />
 
-          {children}
+          {WrappedChildren(children)}
         </Container>
       </Modal>
     );
